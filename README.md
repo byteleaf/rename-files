@@ -1,11 +1,4 @@
-# Sample commandline application based on <font color="green">_Spring Boot_</font>, written in <font color="green">_Kotlin_</font>
-
-
-You can use the diff language tag to generate some colored text:
-
-```diff
-+ text in green
-```
+# Sample commandline application based on <font color="#0ab4b4">_Spring Boot_</font>, <font color="#0ab4b4">_Kotlin_</font>, <font color="#0ab4b4">_Maven_</font> and <font color="#0ab4b4">_Spock(Groovy)_</font>
 
 ## Technologies
 #### Build
