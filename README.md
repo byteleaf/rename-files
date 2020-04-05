@@ -1,5 +1,12 @@
 # Sample commandline application based on <font color="green">_Spring Boot_</font>, written in <font color="green">_Kotlin_</font>
 
+
+You can use the diff language tag to generate some colored text:
+
+```diff
++ text in green
+```
+
 ## Technologies
 #### Build
 We are using **Maven** as build tool. Its much easier to understand and
