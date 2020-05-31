@@ -30,7 +30,7 @@
             <artifactId>kotlin-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- Spring boot -->
+        <!-- Other libs -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -41,9 +41,9 @@
             <version>2.6.2</version>
         </dependency>
         <dependency>
-            <groupId>com.beust</groupId>
-            <artifactId>jcommander</artifactId>
-            <version>1.78</version>
+            <groupId>com.madden-abbott</groupId>
+            <artifactId>jcommander-spring-boot-starter</artifactId>
+            <version>0.1.1</version>
         </dependency>
     </dependencies>
     <build>

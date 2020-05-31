@@ -1,4 +1,4 @@
-# Sample commandline application based on <font color="#0ab4b4">_Spring Boot_</font>, <font color="#0ab4b4">_Kotlin_</font>, <font color="#0ab4b4">_Maven_</font> and <font color="#0ab4b4">_Spock(Groovy)_</font>
+# Sample commandline application based on <font color="#0ab4b4">_Spring Boot_</font>, <font color="#0ab4b4">_Kotlin_</font>, <font color="#0ab4b4">_Maven_</font> and <font color="#0ab4b4">_Spock (Groovy)_</font>
 
 ## Technologies
 #### Build
@@ -30,3 +30,6 @@ dependencies included.
 
 The application is producing a single jar file (all dependencies
 included), which can be used to rename files by their meta tags.
+
+
+## How to setup the project
