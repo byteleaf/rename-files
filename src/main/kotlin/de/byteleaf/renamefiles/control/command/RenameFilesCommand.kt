@@ -5,8 +5,9 @@ import com.maddenabbott.jcommander.controller.Command
 import org.springframework.stereotype.Component
 
 @Component
-@Parameters(commandNames = arrayOf("--version", "-v"), commandDescriptionKey = "To get the current version of the application")
-class VersionCommand : Command {
+@Parameters(commandNames = arrayOf("-", "-v"), commandDescriptionKey = "test_key")
+// TODO custom annotation required commands validation
+class RenameFilesCommand : Command {
 
     override fun run() {
         println("This is command one.")
