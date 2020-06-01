@@ -76,6 +76,13 @@
                 <configuration>
                     <mainClass>de.byteleaf.renamefiles.RenameFilesApplication</mainClass>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

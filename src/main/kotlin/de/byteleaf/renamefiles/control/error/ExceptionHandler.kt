@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service
 @Service
 class ExceptionHandler {
 
-    val log: Logger = LoggerFactory.getLogger(ExceptionHandler::class.java)
+    private val log: Logger = LoggerFactory.getLogger(ExceptionHandler::class.java)
 
     fun handleException(ex: Exception) {
         when (ex) {
             is RuntimeException -> handleRuntimeException(ex)
-            else -> handleFatalException(ex);
+            else -> handleFatalException(ex)
         }
     }
 
@@ -25,9 +25,9 @@ class ExceptionHandler {
     }
 
     fun handleRuntimeException(ex: RuntimeException) {
-        log.warn(ex.message);
+        log.warn(ex.message)
         if (ex.cause != null) {
-            log.warn(ex.cause!!.message);
+            log.warn(ex.cause!!.message)
         }
     }
 }
