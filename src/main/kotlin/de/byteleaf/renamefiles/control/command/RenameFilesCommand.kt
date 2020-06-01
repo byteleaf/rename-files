@@ -6,7 +6,6 @@ import com.maddenabbott.jcommander.controller.Command
 import de.byteleaf.renamefiles.control.service.RenameFileService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import org.springframework.stereotype.Service
 
 @Component
 @Parameters(commandNames = arrayOf("rf"), commandDescription = "To rename files by a defined schema")

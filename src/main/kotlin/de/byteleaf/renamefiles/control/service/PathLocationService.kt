@@ -1,29 +1,41 @@
 package de.byteleaf.renamefiles.control.service
 
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.info.BuildProperties
 import org.springframework.stereotype.Service
+import java.io.File
 
 @Service
 class PathLocationService {
+
+    @Autowired
+    private lateinit var buildProperties: BuildProperties;
+
+    fun getFolder(relativePath: String): File {
+        val file = getBaseFolder().resolve(relativePath)
+        if (file.exists()) {
+            throw RuntimeException("Folder not found ${file.absolutePath}")
+        }
+        return file
+    }
 
     /**
      * Is returning the base path
      * Java project root in development and the folder of the jar file in production
      */
-    public fun getBasePath(): String {
+    fun getBaseFolder(): File {
         var path: String = PathLocationService::class.java.getProtectionDomain().getCodeSource().getLocation().getPath()
-        path = path.replace("%20".toRegex(), " ")
-        if (path.endsWith(".jar")) {
-            var index = path.lastIndexOf("/")
-            if (index == -1) {
-                index = path.lastIndexOf("\\")
-            }
-            if (index == -1) {
-                //throw GeneralException("Can't find application base path [$path]")
-            }
-            path = path.substring(0, index + 1)
-        } else if (path.endsWith("/bin/")) {
-            path = path.substring(0, path.length - 4)
+        path = path.replace("%20".toRegex(), " ") // replace whitespace placeholder
+        return findFolder(File(path), listOf(".jar", buildProperties.artifact))
+    }
+
+    /**
+     * Tries recursive to find an parent folder which name ends with any suffix of the targetFolderSuffixes list
+     */
+    fun findFolder(currentFile: File, targetFolderSuffixes: List<String>): File {
+        if (targetFolderSuffixes.any { currentFile.name.endsWith(it) }) {
+            return currentFile
         }
-        return path
+        return findFolder(currentFile.parentFile, targetFolderSuffixes)
     }
 }

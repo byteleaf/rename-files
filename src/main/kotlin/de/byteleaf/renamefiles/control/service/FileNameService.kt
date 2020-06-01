@@ -50,7 +50,7 @@ class FileNameService {
         if (creationDate != null) {
             return creationDate
         }
-        throw RuntimeException(String.format("Could not retrieve file creation date, EXIF meta data is missing and date not found in name for file %s", path.toFile().name))
+        throw RuntimeException("Could not retrieve file creation date, EXIF meta data is missing and date not found in name for file ${path.toFile().name}")
     }
 
     fun parseDateFormFileName(path: Path): String? {

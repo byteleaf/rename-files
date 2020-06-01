@@ -13,21 +13,25 @@ class RenameFileService {
     private lateinit var fileTypeService: FileTypeService
     @Autowired
     private lateinit var fileNameService: FileNameService
+    @Autowired
+    private lateinit var pathLocationService: PathLocationService
 
-
-    fun renameFolder(folder: String, displayUnrenamed: Boolean) {
-        val parentFolder = File(folder)
-        if (parentFolder.exists()) {
-            for (child in parentFolder.listFiles()) {
-             //  renameFile(child, displayUnrenamed)
-            }
+    fun renameFolder(relativeFolder: String, displayUnrenamed: Boolean) {
+        val parentFolder = pathLocationService.getFolder(relativeFolder)
+        var counterSuccess = 0
+        var counterFail = 0
+        // TODO recursive for folders
+        parentFolder.listFiles()?.forEach { child ->
+            if (renameFile(child, displayUnrenamed)) counterSuccess++ else counterFail++
         }
     }
 
-    fun renameFile(file: File, displayUnrenamed: Boolean) {
+    fun renameFile(file: File, displayUnrenamed: Boolean): Boolean {
         val path = Paths.get(file.absolutePath)
         if (fileTypeService.isFileTypeSupported(path)) {
             Files.move(path, path.resolveSibling(fileNameService.generateNameByDate(path)))
+            return true
         }
+        return false
     }
 }
