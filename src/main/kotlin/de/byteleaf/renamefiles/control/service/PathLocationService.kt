@@ -1,15 +1,15 @@
 package de.byteleaf.renamefiles.control.service
 
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.info.BuildProperties
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.io.File
 
 @Service
 class PathLocationService {
 
-    @Autowired
-    private lateinit var buildProperties: BuildProperties;
+    @Value("#{root-folder.name}")
+    private lateinit var rootFolderName: String
+
 
     fun getFolder(relativePath: String): File {
         val file = getBaseFolder().resolve(relativePath)
@@ -26,13 +26,13 @@ class PathLocationService {
     fun getBaseFolder(): File {
         var path: String = PathLocationService::class.java.getProtectionDomain().getCodeSource().getLocation().getPath()
         path = path.replace("%20".toRegex(), " ") // replace whitespace placeholder
-        return findFolder(File(path), listOf(".jar", buildProperties.artifact))
+        return findFolder(File(path), listOf(".jar", rootFolderName))
     }
 
     /**
      * Tries recursive to find an parent folder which name ends with any suffix of the targetFolderSuffixes list
      */
-    fun findFolder(currentFile: File, targetFolderSuffixes: List<String>): File {
+    private fun findFolder(currentFile: File, targetFolderSuffixes: List<String>): File {
         if (targetFolderSuffixes.any { currentFile.name.endsWith(it) }) {
             return currentFile
         }
