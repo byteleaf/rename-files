@@ -21,10 +21,10 @@ class PathLocationServiceSpec extends Specification {
         expect:
         pathLocationService.getFolder(relativePath).absolutePath.endsWith(resultSuffix)
         where:
-        relativePath   || resultSuffix
-        'src'          || 'rename-files\\src'
-        '/src/main'    || 'rename-files\\src\\main'
-        '\\src/main'   || 'rename-files\\src\\main'
+        relativePath        || resultSuffix
+        'test'              || 'rename-files\\test'
+        '/test/test-sub'    || 'rename-files\\test\\test-sub'
+        '\\test/test-sub'   || 'rename-files\\test\\test-sub'
     }
 
     def 'getFolder, expect exception, folder is not existing'() {
@@ -36,7 +36,7 @@ class PathLocationServiceSpec extends Specification {
 
     def 'getFolder, expect exception, its a file'() {
         when:
-        pathLocationService.getFolder('pom.xml')
+        pathLocationService.getFolder('test/readme.md')
         then:
         thrown(RuntimeException)
     }

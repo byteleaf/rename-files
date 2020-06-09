@@ -16,7 +16,7 @@ import java.util.regex.Pattern
 class FileNameService {
 
     @Throws(IOException::class, ImageProcessingException::class)
-    fun generateNameByDate(path: Path): String {
+    fun generateName(path: Path, displayUnrenamed: Boolean, nameFormat: String): String {
         val dateCreated = getCreateTime(path)
         val fileEnding = getFileEnding(path)
         return dateCreated + getAppendix(dateCreated, fileEnding, path, 0) + getFileEnding(path)

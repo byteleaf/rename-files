@@ -11,18 +11,21 @@ import org.springframework.stereotype.Component
 @Parameters(commandNames = arrayOf("rf"), commandDescription = "To rename files by a defined schema")
 class RenameFilesCommand : Command {
 
-    @Parameter(names = arrayOf("--folder", "-f"), description = "Relative path to the top level folder (is working recursive)", required = true)
-    private lateinit var folder: String
+    @Parameter(names = arrayOf("--directory", "-d"), description = "Relative path to the top level directory (is working recursive)", required = true)
+    private lateinit var directory: String
 
     // TODO Name Format
 
     @Parameter(names = arrayOf("--unrenamed", "-u"), description = "Display all files, which could not be renamed")
     private var displayUnrenamed: Boolean = false
 
+    @Parameter(names = arrayOf("--format", "-f"), description = "The format pattern of the new file name")
+    private var nameFormat: String = "yyyy-MM-dd HH-mm-ss"
+
     @Autowired
     private lateinit var renameFileService: RenameFileService
 
     override fun run() {
-        renameFileService.renameFolder(folder, displayUnrenamed)
+        renameFileService.renameFolder(directory, displayUnrenamed, nameFormat)
     }
 }
