@@ -7,14 +7,17 @@ import java.io.File
 @Service
 class PathLocationService {
 
-    @Value("#{root-folder.name}")
+    @Value("\${root-folder.name}")
     private lateinit var rootFolderName: String
 
-
+    /**
+     * To get a folder relative to the base folder -> [getBaseFolder]
+     * @param relativePath the target path relative to the base folder
+     */
     fun getFolder(relativePath: String): File {
-        val file = getBaseFolder().resolve(relativePath)
-        if (file.exists()) {
-            throw RuntimeException("Folder not found ${file.absolutePath}")
+        val file = File(getBaseFolder(), relativePath)
+        if (!file.isDirectory) {
+            throw RuntimeException("Folder ${file.absolutePath} not found or its a file")
         }
         return file
     }

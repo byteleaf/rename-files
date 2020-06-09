@@ -3,7 +3,6 @@ package de.byteleaf.renamefiles.control.service
 import de.byteleaf.renamefiles.constant.FileType
 import org.springframework.stereotype.Service
 import java.nio.file.Path
-import java.nio.file.Paths
 
 @Service
 class FileTypeService {
