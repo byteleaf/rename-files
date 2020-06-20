@@ -31,4 +31,13 @@ class FileTypeServiceSpec extends Specification {
         Paths.get('./test.jpg')    || true
         Paths.get('test.unknown')  || false
     }
+
+    def 'getFileEnding'() {
+        expect:
+        fileTypeService.getFileEnding(path) == result
+        where:
+        path                       || result
+        Paths.get('./test.jpg')    || '.jpg'
+        Paths.get('test.unknown')  || '.unknown'
+    }
 }

@@ -7,6 +7,15 @@ import java.nio.file.Path
 @Service
 class FileTypeService {
 
+    /**
+     * To get the ending of a file!
+     * For example the file '/test/image.jpg' will return '.jpg'
+     */
+    fun getFileEnding(path: Path): String {
+        val fileName = path.toFile().name
+        return fileName.substring(fileName.lastIndexOf("."))
+    }
+
     private fun getBySuffix(suffix: String): FileType? {
         return FileType.values().find { it.suffix.equals(suffix) }
     }

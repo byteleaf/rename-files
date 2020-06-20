@@ -15,11 +15,17 @@ class PathLocationService {
      * @param relativePath the target path relative to the base folder
      */
     fun getFolder(relativePath: String): File {
-        val file = File(getBaseFolder(), relativePath)
+        val file = getFile(relativePath)
         if (!file.isDirectory) {
             throw RuntimeException("Folder ${file.absolutePath} not found or its a file")
         }
         return file
+    }
+
+    fun getFile(relativePath: String): File {
+        var f = File(getBaseFolder(), relativePath)
+        var b = f.exists()
+        return File(getBaseFolder(), relativePath)
     }
 
     /**

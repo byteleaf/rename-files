@@ -10,7 +10,7 @@ import spock.lang.Specification
 @TestPropertySource(properties = "root-folder.name=rename-files")
 class PathLocationServiceSpec extends Specification {
     @Autowired
-    PathLocationService pathLocationService
+    private PathLocationService pathLocationService
 
     def 'getBaseFolder'() {
         expect: 'The base folder was found, no exception!'
