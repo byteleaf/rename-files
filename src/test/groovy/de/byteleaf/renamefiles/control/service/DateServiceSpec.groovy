@@ -1,13 +1,12 @@
 package de.byteleaf.renamefiles.control.service
 
-import de.byteleaf.renamefiles.constant.FileType
+
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
-
-import java.nio.file.Paths
+import spock.lang.Specification
 
 @ContextConfiguration(classes = DateService)
-class DateServiceSpec {
+class DateServiceSpec extends Specification {
 
     @Autowired
     private DateService dateService

@@ -19,7 +19,7 @@ class CreationDateService {
     fun getCreationDate(path: Path): Date? {
         var crDate: Date? = null
         val metadata = ImageMetadataReader.readMetadata(path.toFile())
-        val directory: Directory? = metadata.getDirectory(ExifIFD0Directory::class.java)
+        val directory: Directory? = metadata.getFirstDirectoryOfType(ExifIFD0Directory::class.java)
         if (null != directory) {
             crDate = directory.getDate(ExifIFD0Directory.TAG_DATETIME)
         }

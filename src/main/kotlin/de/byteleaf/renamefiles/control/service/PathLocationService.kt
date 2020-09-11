@@ -23,8 +23,6 @@ class PathLocationService {
     }
 
     fun getFile(relativePath: String): File {
-        var f = File(getBaseFolder(), relativePath)
-        var b = f.exists()
         return File(getBaseFolder(), relativePath)
     }
 

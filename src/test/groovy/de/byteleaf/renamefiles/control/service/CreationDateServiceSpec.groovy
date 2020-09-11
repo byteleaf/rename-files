@@ -12,16 +12,17 @@ import java.text.SimpleDateFormat
 @TestPropertySource(properties = "root-folder.name=rename-files")
 class CreationDateServiceSpec extends Specification {
 
-//    @Autowired
-//    private CreationDateService creationDateService
-//    @Autowired
-//    private PathLocationService pathLocationService
-//
-////    def 'getCreationDate'() {
-////        expect:
-////        creationDateService.getCreationDate(pathLocationService.getFile(path).toPath()).equals(result)
-////        where:
-////        path                                         || result
-////        'test/test-sub/with-exif-tag-datetime.jpg'   || new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse("2015-08-23 18:40:17")
-////    }
+    @Autowired
+    private CreationDateService creationDateService
+    @Autowired
+    private PathLocationService pathLocationService
+
+    def 'getCreationDate'() {
+        expect:
+        // TODO Timezone problem -> should be 2015-08-23 20:40:17
+        creationDateService.getCreationDate(pathLocationService.getFile(path).toPath()).equals(result)
+        where:
+        path                                         || result
+        'test/test-sub/with-exif-tag-datetime.jpg'   || new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse("2015-08-23 20:40:17")
+    }
 }
