@@ -2,9 +2,7 @@ package de.byteleaf.renamefiles.control.command
 
 import com.beust.jcommander.Parameters
 import com.maddenabbott.jcommander.controller.Command
-import de.byteleaf.renamefiles.control.error.ExceptionHandler
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import de.byteleaf.renamefiles.control.service.PrintService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.info.BuildProperties
 import org.springframework.stereotype.Component
@@ -14,16 +12,17 @@ import org.springframework.stereotype.Component
 @Parameters(commandNames = arrayOf("-v"), commandDescription = "To display the current version of the application")
 class VersionCommand : Command {
 
-    private val log: Logger = LoggerFactory.getLogger(VersionCommand::class.java)
-
+    @Autowired
+    private lateinit var print: PrintService
     @Autowired
     private lateinit var buildProperties: BuildProperties;
 
     override fun run() {
-        log.info("App: {}", buildProperties.name)
-        log.info("Version: {}", buildProperties.version)
-        log.info("BuildTimeStamp: {}", buildProperties.time)
-        log.info("ArtifactId: {}", buildProperties.artifact)
-        log.info("GroupId: {}", buildProperties.group)
+        print.headline("Version")
+        print.content("App: ${buildProperties.name}")
+        print.content("Version: ${buildProperties.version}")
+        print.content("BuildTimeStamp: ${buildProperties.time}")
+        print.content("ArtifactId: ${buildProperties.artifact}")
+        print.content("GroupId: ${buildProperties.group}")
     }
 }

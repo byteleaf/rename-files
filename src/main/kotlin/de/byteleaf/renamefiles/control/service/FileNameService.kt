@@ -15,8 +15,9 @@ class FileNameService {
     private lateinit var creationDateService: CreationDateService
 
     @Throws(IOException::class, ImageProcessingException::class)
-    fun generateName(path: Path, displayUnrenamed: Boolean, nameFormat: String): String {
+    fun generateName(path: Path, fileNameFormat: String, fileNameSuffix: String): String {
         val dateCreated = creationDateService.getCreationDate(path)
+
 //
 //        val fileEnding = getFileEnding(path)
 //        return dateCreated + getAppendix(dateCreated, fileEnding, path, 0) + getFileEnding(path)
@@ -24,10 +25,15 @@ class FileNameService {
     }
 
     /**
-     * To check weather the file is already in the wanted pattern
+     * To check weather the file is already in the wanted pattern. If it is, a renaming is not necessary!
      */
-    fun isNameCorrect(): Boolean {
-        return false
+    fun isRenameNecessary(path: Path, fileNameFormat: String, fileNameSuffix: String): Boolean {
+        val fileName = path.fileName.toString()
+        if((fileNameFormat.length + fileNameSuffix.length) != fileName.length || !fileName.endsWith(fileNameSuffix)) {
+            return false
+        }
+
+        return true
     }
 
     fun getAppendix(dateCreated: String, fileEnding: String, path: Path, counter: Int): String {
@@ -36,10 +42,5 @@ class FileNameService {
         return if (sibling.toFile().exists()) {
             getAppendix(dateCreated, fileEnding, path, counter + 1)
         } else counterString
-    }
-
-    fun formatDate(date: Date?): String {
-        val df = SimpleDateFormat("yyyy-MM-dd HH-mm-ss")
-        return df.format(date)
     }
 }

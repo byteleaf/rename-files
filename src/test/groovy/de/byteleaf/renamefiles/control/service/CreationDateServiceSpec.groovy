@@ -21,7 +21,7 @@ class CreationDateServiceSpec extends Specification {
         expect:
         creationDateService.getCreationDate(pathLocationService.getFile(path).toPath()).equals(result)
         where:
-        path                                || result
+        path                                         || result
         'test/test-sub/with-exif-tag-datetime.jpg'   || new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse("2015-08-23 18:40:17")
     }
 }

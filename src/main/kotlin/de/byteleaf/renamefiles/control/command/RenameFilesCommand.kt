@@ -14,18 +14,19 @@ class RenameFilesCommand : Command {
     @Parameter(names = arrayOf("--directory", "-d"), description = "Relative path to the top level directory (is working recursive)", required = true)
     private lateinit var directory: String
 
-    // TODO Name Format
+    @Parameter(names = arrayOf("--unrenamed", "-u"), description = "Display all files, which could not be renamed, could happen if the file type is not supported")
+    private var displayUnRenamed: Boolean = false
 
-    @Parameter(names = arrayOf("--unrenamed", "-u"), description = "Display all files, which could not be renamed")
-    private var displayUnrenamed: Boolean = false
+    @Parameter(names = arrayOf("--format", "-f"), description = "The format pattern for the new file name")
+    private var fileNameFormat: String = "yyyy-MM-dd HH-mm-ss"
 
-    @Parameter(names = arrayOf("--format", "-f"), description = "The format pattern of the new file name")
-    private var nameFormat: String = "yyyy-MM-dd HH-mm-ss"
+    @Parameter(names = arrayOf("--suffix", "-s"), description = "A static file name suffix")
+    private var fileNameSuffix: String = ""
 
     @Autowired
     private lateinit var renameFileService: RenameFileService
 
     override fun run() {
-        renameFileService.renameFolder(directory, displayUnrenamed, nameFormat)
+        renameFileService.renameFolder(directory, displayUnRenamed, fileNameFormat, fileNameSuffix)
     }
 }

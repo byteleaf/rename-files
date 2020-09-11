@@ -14,7 +14,7 @@ class CreationDateService {
      * Tries to receive (or parse) the creation date of a file from this sources:
      * in this order:
      * 1) MetaData ExifIF TAG_DATETIME
-     * 2) Try to parse date from filename
+     * 2) Try to parse date from filename (TODO)
      */
     fun getCreationDate(path: Path): Date? {
         var crDate: Date? = null
@@ -23,8 +23,6 @@ class CreationDateService {
         if (null != directory) {
             crDate = directory.getDate(ExifIFD0Directory.TAG_DATETIME)
         }
-
-
         return crDate
 
         // TODO parse from file name
@@ -36,6 +34,7 @@ class CreationDateService {
      //   throw RuntimeException("Could not retrieve file creation date, EXIF meta data is missing and date not found in name for file ${path.toFile().name}")
     }
 
+    // TODO move into dateService
 //    fun parseDateFormFileName(path: Path): String? {
 //        val name = path.fileName.toString()
 //        for (sign in Arrays.asList("-", "_")) {

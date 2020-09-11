@@ -36,7 +36,7 @@ class PathLocationServiceSpec extends Specification {
 
     def 'getFolder, expect exception, its a file'() {
         when:
-        pathLocationService.getFolder('test/readme.md')
+        pathLocationService.getFolder('test/README.md')
         then:
         thrown(RuntimeException)
     }

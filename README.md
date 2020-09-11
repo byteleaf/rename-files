@@ -21,28 +21,35 @@ dependencies included.
 
 <font color="red">_TODO JCommander_</font>
 
-### Testing
-<font color="red">_TODO Spock (Testing Framework), Groovy_</font>
-Spring Boot & Spock example: https://github.com/spockframework/spock/tree/master/spock-spring/src/test/groovy/org/spockframework/spring
-
-
-
 ## How the application works
 
 The application is producing a single jar file (all dependencies
-included), which can be used to rename files by their meta tags.
+included), which can be used to rename image files by their meta tags. It's a commandline application, so you can
+start it via ```java -jar rename-files.jar```. Without commands/parameters (or invalid ones) a description with all
+available commands will be displayed. 
 
+Run ```java -jar rename-files.jar -i``` to get some examples and details information about the application.
 
 ## How to setup the project
 
 ### Testing
+
+<font color="red">_TODO Spock (Testing Framework), Groovy_</font>
+Spring Boot & Spock example: https://github.com/spockframework/spock/tree/master/spock-spring/src/test/groovy/org/spockframework/spring
+
 **Run single test**
 ``
 mvn test -Dtest=PathLocationServiceSpec*
 ``
 
 **Debug test**
+
 1) create a intellij run configuration for maven
-2) gloals: test
+2) goals: test
 3) VMOptions: -DforkCount=0
 4) Run Test configuration in debug mode
+
+# Intellij
+
+## Show koltin/java docs
+Go to settings and select "Show quick documentation on mouse move"
