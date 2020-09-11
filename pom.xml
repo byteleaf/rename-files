@@ -73,7 +73,6 @@
         </dependency>
     </dependencies>
     <build>
-        <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <finalName>rename-files</finalName>
         <plugins>
             <!-- Kotlin Plugin -->

@@ -3,6 +3,7 @@ package de.byteleaf.renamefiles.control.service
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.io.File
+import java.lang.IllegalStateException
 
 @Service
 class PathLocationService {
@@ -33,6 +34,9 @@ class PathLocationService {
     fun getBaseFolder(): File {
         var path: String = PathLocationService::class.java.getProtectionDomain().getCodeSource().getLocation().getPath()
         path = path.replace("%20".toRegex(), " ") // replace whitespace placeholder
+        if(rootFolderName.startsWith("\${")) {
+            throw IllegalStateException("The required property root-folder.name was not set!")
+        }
         return findFolder(File(path), listOf(".jar", rootFolderName))
     }
 

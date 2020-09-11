@@ -41,3 +41,16 @@ class PathLocationServiceSpec extends Specification {
         thrown(RuntimeException)
     }
 }
+
+@ContextConfiguration(classes = [PathLocationService.class, BuildProperties.class])
+class PathLocationServiceWithoutPropertiesSpec extends Specification {
+    @Autowired
+    private PathLocationService pathLocationService
+
+    def 'getBaseFolder with missing system property'() {
+        when:
+        pathLocationService.getBaseFolder()
+        then:
+        thrown IllegalStateException
+    }
+}

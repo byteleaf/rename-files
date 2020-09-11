@@ -1,31 +1,30 @@
 package de.byteleaf.renamefiles.control.service
 
 
-import org.mockito.Mock
-import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
+import org.springframework.test.context.TestPropertySource
 import spock.lang.Specification
 
-@ContextConfiguration(classes = [FileNameService.class])
+@ContextConfiguration(classes = [FileNameService.class, CreationDateService.class, PathLocationService.class])
+@TestPropertySource(properties = "root-folder.name=rename-files")
 class FileNameServiceSpec extends Specification {
-//    @Autowired
-//    private FileNameService fileNameService
-//    @Mock
-//    private CreationDateService creationDateService
-//
+    @Autowired
+    private FileNameService fileNameService
+    @Autowired
+    private CreationDateService creationDateService
+    @Autowired
+    private PathLocationService pathLocationService
+
 //    def setupSpec() {
 //        Mockito.when(creationDateService.getCreationDate(Mockito.any())).thenReturn(new Date(2020, 4, 7, 2, 5, 9))
 //    }
 
-//    def 'getFileType'() {
-//        expect:
-//        fileTypeService.getFileType(path) == result
-//        where:
-//        path                       || result
-//        Paths.get('./test.jpg')    || FileType.JPG
-//        Paths.get('./test')        || null
-//        Paths.get('/')             || null
-//        Paths.get('test.unknown')  || null
-//    }
+    def 'generateName integration test'() {
+        expect:
+        fileNameService.generateName(pathLocationService.getFile(path).toPath(),"yyyy-MM-dd HH-mm-ss", "Test") == result
+        where:
+        path                                       || result
+        'test/test-sub/with-exif-tag-datetime.jpg' || "2015-08-23 18:40:17 Test"
+    }
 }
