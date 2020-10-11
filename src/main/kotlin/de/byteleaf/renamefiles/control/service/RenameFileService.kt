@@ -5,13 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.io.File
 import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.Paths
 
 @Service
 class RenameFileService {
-
-    @Autowired
-    private lateinit var fileTypeService: FileTypeService
 
     @Autowired
     private lateinit var fileNameService: FileNameService
@@ -37,12 +35,23 @@ class RenameFileService {
      */
     fun renameFile(file: File, displayUnRenamed: Boolean, fileNameFormat: String, fileNameSuffix: String): Boolean {
         val path = Paths.get(file.absolutePath)
-        if (fileTypeService.isFileTypeSupported(path)) {
-            if (fileNameService.isRenameNecessary(path, fileNameFormat, fileNameSuffix)) {
-                Files.move(path, path.resolveSibling(fileNameService.generateName(path, fileNameFormat, fileNameSuffix)))
+        if (fileNameService.isRenamePossible(path)) {
+            val newFileName = fileNameService.generateName(path, fileNameFormat, fileNameSuffix) ?: return false
+            if (isRenameNecessary(path, newFileName)) {
+                Files.move(path, path.resolveSibling(newFileName))
             }
             return true
         }
+        return false
+    }
+
+    /**
+     * To check weather the file is already in the wanted pattern. If it is, a renaming is not necessary!
+     */
+    fun isRenameNecessary(path: Path, newFileName: String): Boolean {
+        val fileName = path.fileName.toString()
+
+
         return false
     }
 }
