@@ -11,10 +11,8 @@ class FileNameService {
 
     @Autowired
     private lateinit var creationDateService: CreationDateService
-
     @Autowired
     private lateinit var dateService: DateService
-
     @Autowired
     private lateinit var fileTypeService: FileTypeService
 
