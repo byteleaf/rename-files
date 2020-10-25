@@ -23,6 +23,7 @@ class InfoCommand : Command {
         print.content("With the -s parameter the optional name suffix can be specified. If the suffix is ' Test' the filename could be '2020-05-12 23:30:10 Test.jpg'")
         print.content("The timestamp will be taken from the exif meta data tag TAG_DATETIME.")
         print.content( "If multiple files have an identical timestamp a sequential number will be added: '2020-05-12 23:30:10.jpg', '2020-05-12 23:30:10-1.jpg', '2020-05-12 23:30:10-2.jpg'...")
+        print.content( "If multiple files have an identical timestamp a sequential number will be added: '2020-05-12_suffix.jpg', '2020-05-12-1_suffix.jpg', '2020-05-12-2_suffix.jpg'...")
         print.title("Supported file types:")
         print.content(FileType.values().joinToString(", "))
 

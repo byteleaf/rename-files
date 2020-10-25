@@ -1,11 +1,11 @@
 package de.byteleaf.renamefiles.control.service
 
+import de.byteleaf.renamefiles.constant.RenameStatus
 import de.byteleaf.renamefiles.constant.FileType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.io.File
 import java.nio.file.Files
-import java.nio.file.Path
 import java.nio.file.Paths
 
 @Service
@@ -18,40 +18,30 @@ class RenameFileService {
     private lateinit var pathLocationService: PathLocationService
 
     @Autowired
-    private lateinit var print: PrintService
+    private lateinit var printService: PrintService
 
     fun renameFolder(relativeFolder: String, displayUnRenamed: Boolean, fileNameFormat: String, fileNameSuffix: String) {
         val parentFolder = pathLocationService.getFolder(relativeFolder)
-        val unRenamedFiles = ArrayList<File>();
+        val statusOverview = HashMap<RenameStatus, MutableList<File>>()
         // TODO recursive for folders
         parentFolder.listFiles()?.forEach { child ->
-            if (!renameFile(child, displayUnRenamed, fileNameFormat, fileNameSuffix)) unRenamedFiles.add(child);
+            val status = renameFile(child, displayUnRenamed, fileNameFormat, fileNameSuffix)
+            statusOverview.getOrPut(status) { mutableListOf() }.add(child)
         }
+        // TODO print results
+
+        // TODO print number of renamed
     }
 
     /**
-     * Is renaming a file if necessary!
-     * @return false if its not possible to rename the file (could happen for example if the [FileType] is not supported)
+     * Is renaming the file if necessary
      */
-    fun renameFile(file: File, displayUnRenamed: Boolean, fileNameFormat: String, fileNameSuffix: String): Boolean {
+    fun renameFile(file: File, displayUnRenamed: Boolean, fileNameFormat: String, fileNameSuffix: String): RenameStatus {
         val path = Paths.get(file.absolutePath)
-        if (fileNameService.isRenamePossible(path)) {
-            val newFileName = fileNameService.generateName(path, fileNameFormat, fileNameSuffix) ?: return false
-            if (isRenameNecessary(path, newFileName)) {
-                Files.move(path, path.resolveSibling(newFileName))
-            }
-            return true
+        val renameStatus = fileNameService.shouldRename(path, fileNameFormat, fileNameSuffix)
+        if (renameStatus == RenameStatus.RENAMED) {
+            Files.move(path, path.resolveSibling(fileNameService.generateName(path, fileNameFormat, fileNameSuffix)))
         }
-        return false
-    }
-
-    /**
-     * To check weather the file is already in the wanted pattern. If it is, a renaming is not necessary!
-     */
-    fun isRenameNecessary(path: Path, newFileName: String): Boolean {
-        val fileName = path.fileName.toString()
-
-
-        return false
+        return renameStatus
     }
 }
