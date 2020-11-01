@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringRunner
 import java.text.SimpleDateFormat
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 @RunWith(SpringRunner::class)
 @ContextConfiguration(initializers = [ConfigFileApplicationContextInitializer::class], classes = [CreationDateService::class, PathLocationService::class, DateService::class])
@@ -23,6 +24,13 @@ class CreationDateServiceTest {
         val path = pathLocationService.getFile("test/test-sub/with-exif-tag-datetime.jpg").toPath()
         // TODO Only working in Timezone +2 !!
         assertEquals(SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse("2015-08-23 20:40:17"), creationDateService.getCreationDate(path))
+    }
+
+    @Test
+    fun getCreationDateNoExif() {
+        val path = pathLocationService.getFile("test/test-sub/no-exif.jpg").toPath()
+        // TODO Only working in Timezone +2 !!
+        assertNull(creationDateService.getCreationDate(path))
     }
 
     @Test

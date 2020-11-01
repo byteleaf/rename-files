@@ -30,7 +30,7 @@ class PrintService {
     }
 
     fun error(message: String) {
-        println("\u001B[31m[1m ${message} \u001b[0m")
+        println("\u001B[31m ${message} \u001b[0m")
     }
 
     fun printStatusReport(statusOverview: HashMap<RenameStatus, MutableList<File>>, displayUnRenamed: Boolean, displayRenamed: Boolean) {

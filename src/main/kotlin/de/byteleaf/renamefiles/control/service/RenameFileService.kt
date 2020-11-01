@@ -20,6 +20,9 @@ class RenameFileService {
     @Autowired
     private lateinit var printService: PrintService
 
+    /**
+     *
+     */
     fun renameFolder(relativeFolder: String, displayUnRenamed: Boolean, displayRenamed: Boolean, fileNameFormat: String, fileNameSuffix: String) {
         val parentFolder = pathLocationService.getFolder(relativeFolder)
         val statusOverview = HashMap<RenameStatus, MutableList<File>>()
@@ -34,9 +37,7 @@ class RenameFileService {
                 val result = renameFile(child, fileNameFormat, fileNameSuffix)
                 statusOverview.getOrPut(result.first) { mutableListOf() }.add(result.second)
             } else {
-                child.listFiles()?.forEach { child ->
-                    renameFolderInternal(child, fileNameFormat, fileNameSuffix, statusOverview)
-                }
+                renameFolderInternal(child, fileNameFormat, fileNameSuffix, statusOverview)
             }
         }
     }

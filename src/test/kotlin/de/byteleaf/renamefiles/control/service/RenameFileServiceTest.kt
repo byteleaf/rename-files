@@ -38,7 +38,7 @@ class RenameFileServiceTest {
 
     @After
     fun tearDown() {
-        //deleteTestFolder()
+       // deleteTestFolder()
     }
 
     /**
@@ -58,11 +58,12 @@ class RenameFileServiceTest {
     fun renameFolder() {
         service.run { renameFolder(testFolder, true, displayRenamed = true, fileNameFormat = "yyyy-MM-dd HH-mm-ss", fileNameSuffix = " suffix") }
         val folder = pathLocationService.getFolder(testFolder)
-        assertEquals(4, folder.listFiles().size)
+        // TODO
+        assertEquals(5, folder.listFiles().size)
         //folder.resolve()
     }
 
-    private fun fileExists(expectedFiles: String) {
+    private fun fileExists(expectedFiles: List<String>) {
 
     }
 
