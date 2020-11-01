@@ -49,4 +49,8 @@ class PathLocationService {
         }
         return findFolder(currentFile.parentFile, targetFolderSuffixes)
     }
+
+    fun getRelativePath(file: File): String {
+        return file.absolutePath.replace(getBaseFolder().absolutePath, "")
+    }
 }

@@ -1,4 +1,4 @@
-# Sample commandline application based on <font color="#0ab4b4">_Spring Boot_</font>, <font color="#0ab4b4">_Kotlin_</font>, <font color="#0ab4b4">_Maven_</font> and <font color="#0ab4b4">_Spock (Groovy)_</font>
+# Sample commandline application based on <font color="#0ab4b4">_Spring Boot_</font>, <font color="#0ab4b4">_Kotlin_</font> and <font color="#0ab4b4">_Maven_</font>
 ## Technologies
 ### Build
 We are using **Maven** as build tool. Its much easier to understand and

@@ -4,15 +4,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.info.BuildProperties
+import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer
 import org.springframework.test.context.ContextConfiguration
-import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @RunWith(SpringRunner::class)
-@ContextConfiguration(classes = [PathLocationService::class, BuildProperties::class])
-@TestPropertySource(properties = ["root-folder.name=rename-files"])
+@ContextConfiguration(initializers = [ConfigFileApplicationContextInitializer::class], classes = [PathLocationService::class, BuildProperties::class])
 class PathLocationServiceTest {
 
     @Autowired
@@ -42,6 +41,6 @@ class PathLocationServiceTest {
 
     @Test
     fun getFile() {
-        assertEquals("", pathLocationService.getFile("test/README.md").name)
+        assertEquals("README.md", pathLocationService.getFile("test/README.md").name)
     }
 }

@@ -15,7 +15,10 @@ class RenameFilesCommand : Command {
     private lateinit var directory: String
 
     @Parameter(names = arrayOf("--unrenamed", "-u"), description = "Display all files, which could not be renamed, could happen if the file type is not supported")
-    private var displayUnRenamed: Boolean = false
+    private var displayUnRenamed: Boolean = true
+
+    @Parameter(names = arrayOf("--renamed", "-r"), description = "Display all renamed files")
+    private var displayRenamed: Boolean = false
 
     @Parameter(names = arrayOf("--format", "-f"), description = "The format pattern for the new file name")
     private var fileNameFormat: String = "yyyy-MM-dd HH-mm-ss"
@@ -27,6 +30,6 @@ class RenameFilesCommand : Command {
     private lateinit var renameFileService: RenameFileService
 
     override fun run() {
-        renameFileService.renameFolder(directory, displayUnRenamed, fileNameFormat, fileNameSuffix)
+        renameFileService.renameFolder(directory, displayUnRenamed, displayRenamed, fileNameFormat, fileNameSuffix)
     }
 }

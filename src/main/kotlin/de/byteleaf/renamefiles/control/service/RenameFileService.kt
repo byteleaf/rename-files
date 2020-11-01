@@ -20,28 +20,40 @@ class RenameFileService {
     @Autowired
     private lateinit var printService: PrintService
 
-    fun renameFolder(relativeFolder: String, displayUnRenamed: Boolean, fileNameFormat: String, fileNameSuffix: String) {
+    fun renameFolder(relativeFolder: String, displayUnRenamed: Boolean, displayRenamed: Boolean, fileNameFormat: String, fileNameSuffix: String) {
         val parentFolder = pathLocationService.getFolder(relativeFolder)
         val statusOverview = HashMap<RenameStatus, MutableList<File>>()
-        // TODO recursive for folders
-        parentFolder.listFiles()?.forEach { child ->
-            val status = renameFile(child, displayUnRenamed, fileNameFormat, fileNameSuffix)
-            statusOverview.getOrPut(status) { mutableListOf() }.add(child)
-        }
-        // TODO print results
+        renameFolderInternal(parentFolder, fileNameFormat, fileNameSuffix, statusOverview)
+        printService.printStatusReport(statusOverview, displayUnRenamed, displayRenamed)
+    }
 
-        // TODO print number of renamed
+    private fun renameFolderInternal(parentFolder: File, fileNameFormat: String, fileNameSuffix: String,
+                                     statusOverview: HashMap<RenameStatus, MutableList<File>>) {
+        parentFolder.listFiles()?.forEach { child ->
+            if (child.isFile) {
+                val result = renameFile(child, fileNameFormat, fileNameSuffix)
+                statusOverview.getOrPut(result.first) { mutableListOf() }.add(result.second)
+            } else {
+                child.listFiles()?.forEach { child ->
+                    renameFolderInternal(child, fileNameFormat, fileNameSuffix, statusOverview)
+                }
+            }
+        }
     }
 
     /**
      * Is renaming the file if necessary
+     * @return a pair of the [RenameStatus] and the the file, if [RenameStatus.RENAMED] the new file will be returned
+     * else the original file
      */
-    fun renameFile(file: File, displayUnRenamed: Boolean, fileNameFormat: String, fileNameSuffix: String): RenameStatus {
-        val path = Paths.get(file.absolutePath)
-        val renameStatus = fileNameService.shouldRename(path, fileNameFormat, fileNameSuffix)
+    fun renameFile(file: File, fileNameFormat: String, fileNameSuffix: String): Pair<RenameStatus, File> {
+        val originalPath = Paths.get(file.absolutePath)
+        val renameStatus = fileNameService.shouldRename(originalPath, fileNameFormat, fileNameSuffix)
         if (renameStatus == RenameStatus.RENAMED) {
-            Files.move(path, path.resolveSibling(fileNameService.generateName(path, fileNameFormat, fileNameSuffix)))
+            val newPath = originalPath.resolveSibling(fileNameService.generateName(originalPath, fileNameFormat, fileNameSuffix))
+            Files.move(originalPath, newPath)
+            return Pair(renameStatus, newPath.toFile())
         }
-        return renameStatus
+        return Pair(renameStatus, originalPath.toFile())
     }
 }

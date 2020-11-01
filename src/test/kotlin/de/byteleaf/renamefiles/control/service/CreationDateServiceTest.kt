@@ -3,18 +3,18 @@ package de.byteleaf.renamefiles.control.service
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer
 import org.springframework.test.context.ContextConfiguration
-import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 import java.text.SimpleDateFormat
 import kotlin.test.assertEquals
 
 @RunWith(SpringRunner::class)
-@ContextConfiguration(classes = [CreationDateService::class, PathLocationService::class, DateService::class])
-@TestPropertySource(properties = ["root-folder.name=rename-files"])
+@ContextConfiguration(initializers = [ConfigFileApplicationContextInitializer::class], classes = [CreationDateService::class, PathLocationService::class, DateService::class])
 class CreationDateServiceTest {
     @Autowired
     private lateinit var creationDateService: CreationDateService
+
     @Autowired
     private lateinit var pathLocationService: PathLocationService
 
@@ -29,6 +29,6 @@ class CreationDateServiceTest {
     fun getCreationDateAsString() {
         val path = pathLocationService.getFile("test/test-sub/with-exif-tag-datetime.jpg").toPath()
         // TODO Only working in Timezone +2 !!
-        assertEquals("2015-08-23",creationDateService.getCreationDateAsString(path, "YYYY-MM-dd"))
+        assertEquals("2015-08-23", creationDateService.getCreationDateAsString(path, "YYYY-MM-dd"))
     }
 }

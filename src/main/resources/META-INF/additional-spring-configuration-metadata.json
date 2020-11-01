@@ -3,7 +3,7 @@
     {
       "name": "root-folder.name",
       "type": "java.lang.String",
-      "description": "The name of the project root folder"
+      "description": "The name of the project root folder or the jar file name"
     }
   ]
 }
