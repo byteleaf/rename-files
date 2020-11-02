@@ -9,6 +9,15 @@ available commands will be displayed.
 
 Run ```java -jar rename-files.jar -i``` to get some examples and details information about the application.
 
+# Releases
+
+## 1.0.3
++ Format dates by time offset from exit data
+
+## 1.0.2
+Initial version
+
+
 # TODO
 
 ## Technical

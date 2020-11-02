@@ -14,8 +14,8 @@ class DateService {
      * Is converting a date to a string by a given format.
      * The current system timezone will be taken!
      */
-    fun formatDate(date: Date, fileNameFormat: String): String = ZonedDateTime.ofInstant(date.toInstant(),
-            ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern(fileNameFormat))
+    fun formatDate(date: Date, fileNameFormat: String): String = ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC"))
+            .format(DateTimeFormatter.ofPattern(fileNameFormat))
 
     fun parseDate(date: String, fileNameFormat: String): Date = SimpleDateFormat(fileNameFormat).parse(date)
 

@@ -6,9 +6,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.util.FileSystemUtils.deleteRecursively
+import java.io.File
 import kotlin.test.assertEquals
 
 /**
@@ -16,15 +18,16 @@ import kotlin.test.assertEquals
  */
 @RunWith(SpringRunner::class)
 @ContextConfiguration(initializers = [ConfigFileApplicationContextInitializer::class], classes = [RenameFileService::class,
-    PathLocationService::class, FileNameService::class, FileTypeService::class, CreationDateService::class, DateService::class, PrintService::class])
+    PathLocationService::class, FileNameService::class, FileTypeService::class, CreationDateService::class, DateService::class])
 class RenameFileServiceTest {
     @Autowired
     private lateinit var service: RenameFileService
 
     @Autowired
     private lateinit var pathLocationService: PathLocationService
-//    @MockBean
-//    private lateinit var printService: PrintService
+
+    @MockBean
+    private lateinit var printService: PrintService
 
     private val targetFolder = "target"
     private val testFolderName = "test-rename-files"
@@ -38,7 +41,8 @@ class RenameFileServiceTest {
 
     @After
     fun tearDown() {
-       // deleteTestFolder()
+        // TODO
+        // deleteTestFolder()
     }
 
     /**
@@ -58,12 +62,10 @@ class RenameFileServiceTest {
     fun renameFolder() {
         service.run { renameFolder(testFolder, true, displayRenamed = true, fileNameFormat = "yyyy-MM-dd HH-mm-ss", fileNameSuffix = " suffix") }
         val folder = pathLocationService.getFolder(testFolder)
-        // TODO
-        assertEquals(5, folder.listFiles().size)
-        //folder.resolve()
+        validateFolder(folder, 5, listOf("2015-"))
     }
 
-    private fun fileExists(expectedFiles: List<String>) {
+    private fun validateFolder(folder: File, expectedFileNumber: Int, expectedFileNames: List<String>) {
 
     }
 

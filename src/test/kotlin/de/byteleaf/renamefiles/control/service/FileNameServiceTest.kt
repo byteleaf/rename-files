@@ -34,7 +34,7 @@ class FileNameServiceTest {
     @Test
     fun shouldRename() {
         shouldRename("", Paths.get("f.notSupported"), RenameStatus.FILE_TYPE_NOT_SUPPORTED)
-        shouldRename(null, Paths.get("f.jpg"), RenameStatus.CREATION_DATE_NOT_FOUND_IN_META_DATA)
+        shouldRename(null, Paths.get("f.jpg"), RenameStatus.CREATION_DATE_NOT_FOUND_IN_EXIF)
         shouldRename("", Paths.get("f.jpg"), RenameStatus.RENAMED)
         shouldRename("2015-08-23", Paths.get("2015-08-23-1_suffix.jpg"), RenameStatus.RENAME_NOT_NECESSARY)
     }
