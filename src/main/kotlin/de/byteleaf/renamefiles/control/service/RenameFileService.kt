@@ -1,7 +1,6 @@
 package de.byteleaf.renamefiles.control.service
 
 import de.byteleaf.renamefiles.constant.RenameStatus
-import de.byteleaf.renamefiles.constant.FileType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.io.File
@@ -21,7 +20,7 @@ class RenameFileService {
     private lateinit var printService: PrintService
 
     /**
-     *
+     * Is renaming all files in a folder. Same for all subfolder recursive.
      */
     fun renameFolder(relativeFolder: String, displayUnRenamed: Boolean, displayRenamed: Boolean, fileNameFormat: String, fileNameSuffix: String) {
         val parentFolder = pathLocationService.getFolder(relativeFolder)

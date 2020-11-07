@@ -24,38 +24,22 @@ class CreationDateService {
     /**
      * Tries to receive (or parse) the creation date of the file MetaData ExifIF TAG_DATETIME
      */
-    fun getCreationDate(path: Path): OffsetDateTime {
+    fun getCreationDateAsString(path: Path, fileNameFormat: String): String? {
         val metadata = ImageMetadataReader.readMetadata(path.toFile())
-        val crDate = getCreationDateFromExif(metadata)
-        val timeZoneOffset = getExifData<String>(metadata, ExifSubIFDDirectory::class.java, ExifSubIFDDirectory.TAG_TIME_ZONE, RenameStatus.TIMEZONE_NOT_FOUND_IN_EXIF)
-        return crDate.toInstant().atOffset(ZoneOffset.UTC);
+        val crDate = getExifData<Date>(metadata, ExifSubIFDDirectory::class.java, ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL, true)
+        if(crDate != null) {
+            return dateService.formatDate(crDate, fileNameFormat)
+        }
+        return null
     }
 
-    fun getCreationDateFromExif(metadata: Metadata): Date {
-        var date = getExifData<Date>(metadata, ExifSubIFDDirectory::class.java, ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL, RenameStatus.CREATION_DATE_NOT_FOUND_IN_EXIF, true)
-        if (date == null) {
-            date = getExifData<Date>(metadata, ExifSubIFDDirectory::class.java, ExifIFD0Directory.TAG_DATETIME, RenameStatus.CREATION_DATE_NOT_FOUND_IN_EXIF, true)
-        }
-        if (date == null) {
-            throw RenameStatusException(RenameStatus.CREATION_DATE_NOT_FOUND_IN_EXIF)
-        }
-        return date;
-    }
-
-
-    private fun <T> getExifData(metadata: Metadata, directoryType: Class<out ExifDirectoryBase>, tag: Int, errorStatus: RenameStatus, returnDate: Boolean = false): T? {
-        if (metadata.getDirectoriesOfType(directoryType).count() == 0) {
+    private fun <T> getExifData(metadata: Metadata, directoryType: Class<out ExifDirectoryBase>, tag: Int, returnDate: Boolean = false): T? {
+        if (metadata.getDirectoriesOfType(directoryType).count() > 0) {
             if (returnDate) {
                 return metadata.getFirstDirectoryOfType(directoryType).getDate(tag) as T
             }
             return metadata.getFirstDirectoryOfType(directoryType).getString(tag) as T
         }
         return null
-    }
-
-    fun getCreationDateAsString(path: Path, fileNameFormat: String): String {
-//        val dateCreated = getCreationDate(path) ?: return null
-//        return dateService.formatDate(dateCreated, fileNameFormat)
-        return ""
     }
 }

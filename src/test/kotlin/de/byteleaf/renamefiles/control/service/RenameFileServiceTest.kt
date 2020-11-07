@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.util.FileSystemUtils.deleteRecursively
 import java.io.File
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 /**
  * Integration test, try to rename real files!
@@ -22,10 +23,8 @@ import kotlin.test.assertEquals
 class RenameFileServiceTest {
     @Autowired
     private lateinit var service: RenameFileService
-
     @Autowired
     private lateinit var pathLocationService: PathLocationService
-
     @MockBean
     private lateinit var printService: PrintService
 
@@ -41,8 +40,7 @@ class RenameFileServiceTest {
 
     @After
     fun tearDown() {
-        // TODO
-        // deleteTestFolder()
+        deleteTestFolder()
     }
 
     /**
@@ -62,11 +60,17 @@ class RenameFileServiceTest {
     fun renameFolder() {
         service.run { renameFolder(testFolder, true, displayRenamed = true, fileNameFormat = "yyyy-MM-dd HH-mm-ss", fileNameSuffix = " suffix") }
         val folder = pathLocationService.getFolder(testFolder)
-        validateFolder(folder, 5, listOf("2015-"))
+        validateFolder(folder, 6, listOf("2015-08-23 18-40-17 suffix.jpg", "2015-08-24 18-40-17 suffix.jpg", "2015-08-25 18-40-17 suffix.jpg",
+                "2020-08-30 17-40-56 suffix.jpg", "image.unsupported"))
+        validateFolder(folder.resolve("recursive"), 3, listOf("2015-08-23 18-40-17 suffix.jpg", "2015-08-23 18-40-17-1 suffix.jpg", "no-exif.jpg"))
     }
 
     private fun validateFolder(folder: File, expectedFileNumber: Int, expectedFileNames: List<String>) {
-
+        assertEquals(expectedFileNumber, folder.listFiles().size)
+        expectedFileNames.forEach{
+            val file = folder.resolve(it)
+            assertTrue(file.exists(), "File ${file.name} is not existing but should exist")
+        }
     }
 
 

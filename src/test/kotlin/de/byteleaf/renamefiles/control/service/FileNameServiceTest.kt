@@ -46,7 +46,7 @@ class FileNameServiceTest {
 
     @Test
     fun isRenameNecessary() {
-        isRenameNecessary("2015-08-23 18-40-17", Paths.get("a.jpg"), true) // name shorter than suffix
+        isRenameNecessary("2015-08-23 18-40-17", Paths.get("ExifSubIFDDirectory.TAG_TIMEZONE.jpg"), true) // name shorter than suffix
         isRenameNecessary("2015-08-23 18-40-17", Paths.get("2015-08-23 18-40-17_suffi1.jpg"), true) // not ends with correct suffix
         isRenameNecessary("2015-08-23 18-40-17", Paths.get("2015-08-23 18-40-33_suffix.jpg"), true) // not the correct date
         isRenameNecessary("2015-08-23 18-40-17", Paths.get("2015-08-23 18-40-17_suffix.jpg"), false)

@@ -25,8 +25,8 @@ class PathLocationServiceTest {
     @Test
     fun getFolder() {
         assertTrue(pathLocationService.getFolder("test").absolutePath.endsWith("rename-files\\test"))
-        assertTrue(pathLocationService.getFolder("/test/test-sub").absolutePath.endsWith("rename-files\\test\\test-sub"))
-        assertTrue(pathLocationService.getFolder("\\test/test-sub").absolutePath.endsWith("rename-files\\test\\test-sub"))
+        assertTrue(pathLocationService.getFolder("/test/path-location").absolutePath.endsWith("rename-files\\test\\path-location"))
+        assertTrue(pathLocationService.getFolder("\\test/path-location").absolutePath.endsWith("rename-files\\test\\path-location"))
     }
 
     @Test(expected = RuntimeException::class)
@@ -36,11 +36,11 @@ class PathLocationServiceTest {
 
     @Test(expected = RuntimeException::class)
     fun getFolderExpectFolderIsFile() {
-        pathLocationService.getFolder("test/README.md")
+        pathLocationService.getFolder("test/path-location/test-file.md")
     }
 
     @Test
     fun getFile() {
-        assertEquals("README.md", pathLocationService.getFile("test/README.md").name)
+        assertEquals("test-file.md", pathLocationService.getFile("test/path-location/test-file.md").name)
     }
 }

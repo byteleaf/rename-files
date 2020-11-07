@@ -25,7 +25,7 @@ class FileNameService {
     fun generateName(path: Path, fileNameFormat: String, fileNameSuffix: String): String {
         val fileEnding = ".${path.toFile().extension}"
 
-      val dateCreatedTs = creationDateService.getCreationDateAsString(path, fileNameFormat)
+      val dateCreatedTs = creationDateService.getCreationDateAsString(path, fileNameFormat)!!
         val appendix = getAppendix(path, dateCreatedTs, fileNameSuffix, fileEnding)
         return concatFileName(dateCreatedTs, appendix, fileNameSuffix, fileEnding)
     }
@@ -53,8 +53,7 @@ class FileNameService {
      */
     fun shouldRename(path: Path, fileNameFormat: String, fileNameSuffix: String): RenameStatus {
         if (!fileTypeService.isFileTypeSupported(path)) return RenameStatus.FILE_TYPE_NOT_SUPPORTED
-        // TODO catch exception
-        if (creationDateService.getCreationDateAsString(path, fileNameFormat) == null) return RenameStatus.TIMEZONE_NOT_FOUND_IN_EXIF
+        if (creationDateService.getCreationDateAsString(path, fileNameFormat) == null) return RenameStatus.CREATION_DATE_NOT_FOUND_IN_EXIF
         if (!isRenameNecessary(path, fileNameFormat, fileNameSuffix)) return RenameStatus.RENAME_NOT_NECESSARY
         return RenameStatus.RENAMED
     }
