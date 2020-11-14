@@ -9,10 +9,15 @@ available commands will be displayed.
 
 Run ```java -jar rename-files.jar -i``` to get some examples and details information about the application.
 
+## global usage on windows
+
 # Releases
 
 ## 1.0.3
-+ Format dates by time offset from exit data
++ Timestamp will taken from ExifSubIfDDirectory.TAG_DATETIME
++ Status report on the command line after rename process
++ Show command overview if no command is selected
++ Linebreaks for console logs added
 
 ## 1.0.2
 Initial version
@@ -21,11 +26,9 @@ Initial version
 # TODO
 
 ## Technical
-- Configure logger
-- On no/invalid argument print available argument list
 - // TODO custom annotation required commands validation
 - Unittest for exception handling!
+- Example controller
 
 ## New Features
 - TODO parse from file name, sometimes the timestamp is in the file name not in the exif data!!
-- Help command -> read in and display documentation.md files needed?

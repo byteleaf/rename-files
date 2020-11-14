@@ -6,7 +6,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringRunner
@@ -16,11 +15,7 @@ import kotlin.test.assertEquals
 
 
 @RunWith(SpringRunner::class)
-/**
- * [DateService] & [FileTypeService] & [PathLocationService] services have no dependencies so its easier not mocking them, in general you should mock all services!
- */
-@ContextConfiguration(initializers = [ConfigFileApplicationContextInitializer::class], classes = [FileNameService::class, DateService::class,
-    FileTypeService::class, PathLocationService::class])
+@ContextConfiguration(classes = [FileNameService::class, DateService::class, FileTypeService::class, PathLocationService::class])
 class FileNameServiceTest {
     @Autowired
     private lateinit var service: FileNameService

@@ -5,9 +5,9 @@ import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringRunner
-import java.time.ZoneId
-import java.time.ZonedDateTime
+import java.text.SimpleDateFormat
 import java.util.*
+import java.util.Locale
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -22,7 +22,8 @@ class DateServiceTest {
 
     @Test
     fun formatDate() {
-        assertEquals("2020-10-01 01-02-03", service.formatDate(Date(120, 9, 1, 1, 2, 3), "yyyy-MM-dd HH-mm-ss"))
+        val date = SimpleDateFormat("yyyy-MM-dd HH-mm-ss Z", Locale.ENGLISH).parse("2020-10-01 01-02-03 +0000")
+        assertEquals("2020-10-01 01-02-03", service.formatDate(date, "yyyy-MM-dd HH-mm-ss"))
     }
 
     @Test

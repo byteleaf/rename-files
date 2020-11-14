@@ -5,7 +5,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringRunner
@@ -18,13 +17,15 @@ import kotlin.test.assertTrue
  * Integration test, try to rename real files!
  */
 @RunWith(SpringRunner::class)
-@ContextConfiguration(initializers = [ConfigFileApplicationContextInitializer::class], classes = [RenameFileService::class,
-    PathLocationService::class, FileNameService::class, FileTypeService::class, CreationDateService::class, DateService::class])
+@ContextConfiguration(classes = [RenameFileService::class, PathLocationService::class, FileNameService::class, FileTypeService::class,
+    CreationDateService::class, DateService::class])
 class RenameFileServiceTest {
     @Autowired
     private lateinit var service: RenameFileService
+
     @Autowired
     private lateinit var pathLocationService: PathLocationService
+
     @MockBean
     private lateinit var printService: PrintService
 
@@ -67,7 +68,7 @@ class RenameFileServiceTest {
 
     private fun validateFolder(folder: File, expectedFileNumber: Int, expectedFileNames: List<String>) {
         assertEquals(expectedFileNumber, folder.listFiles().size)
-        expectedFileNames.forEach{
+        expectedFileNames.forEach {
             val file = folder.resolve(it)
             assertTrue(file.exists(), "File ${file.name} is not existing but should exist")
         }
