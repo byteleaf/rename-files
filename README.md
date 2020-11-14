@@ -29,6 +29,7 @@ Initial version
 - // TODO custom annotation required commands validation
 - Unittest for exception handling!
 - Example controller
+- Show error if a command is invalid
 
 ## New Features
 - TODO parse from file name, sometimes the timestamp is in the file name not in the exif data!!
