@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component
 @Parameters(commandNames = arrayOf("rf"), commandDescription = "To rename files by a defined schema")
 class RenameFilesCommand : Command {
 
-    @Parameter(names = arrayOf("--directory", "-d"), description = "Relative path to the top level directory (is working recursive)", required = true)
-    private lateinit var directory: String
+    @Parameter(names = arrayOf("--directory", "-d"), description = "Relative path to the top level directory (is working recursive)")
+    private var directory: String = "./"
 
     @Parameter(names = arrayOf("--unrenamed", "-u"), description = "Display all files, which could not be renamed, could happen if the file type is not supported")
     private var displayUnRenamed: Boolean = true

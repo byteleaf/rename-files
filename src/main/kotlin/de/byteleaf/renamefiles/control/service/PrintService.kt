@@ -50,7 +50,7 @@ class PrintService {
             when(key) {
                 RenameStatus.FILE_TYPE_NOT_SUPPORTED -> if (displayUnRenamed) printReport("Unsupported file types", statusOverview[key], true)
                 RenameStatus.CREATION_DATE_NOT_FOUND_IN_EXIF -> if (displayUnRenamed) printReport("Creation date not found", statusOverview[key], true)
-                RenameStatus.RENAME_NOT_NECESSARY -> if (displayUnRenamed) printReport("Unsupported file types", statusOverview[key])
+                RenameStatus.RENAME_NOT_NECESSARY -> if (displayUnRenamed) printReport("Rename not necessary", statusOverview[key])
                 RenameStatus.RENAMED -> if (displayRenamed) printReport("Renamed", statusOverview[key])
                 else -> throw RuntimeException("The reporting for RenameStatus $key is not implemented!")
             }

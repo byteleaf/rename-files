@@ -9,7 +9,11 @@ available commands will be displayed.
 
 Run ```java -jar rename-files.jar -i``` to get some examples and details information about the application.
 
-## global usage on windows
+## Global usage (windows)
+
+Adjust the path in the **rename-files.bat** an add its parent folder to the PATH environment variable.
+
+Now you can use the app from everywhere via ``rename-files.bat -v``.
 
 # Releases
 
@@ -21,15 +25,3 @@ Run ```java -jar rename-files.jar -i``` to get some examples and details informa
 
 ## 1.0.2
 Initial version
-
-
-# TODO
-
-## Technical
-- // TODO custom annotation required commands validation
-- Unittest for exception handling!
-- Example controller
-- Show error if a command is invalid
-
-## New Features
-- TODO parse from file name, sometimes the timestamp is in the file name not in the exif data!!

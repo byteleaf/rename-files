@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 
 
 @Component
-@Parameters(commandNames = arrayOf("-v"), commandDescription = "To display the current version of the application")
+@Parameters(commandNames = arrayOf("-v", "--version"), commandDescription = "To display the current version of the application")
 class VersionCommand : Command {
 
     @Autowired

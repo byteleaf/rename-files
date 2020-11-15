@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-@Parameters(commandNames = arrayOf("-i"), commandDescription = "Additional information and examples how to use this tool")
+@Parameters(commandNames = arrayOf("-i", "--info"), commandDescription = "Additional information and examples how to use this tool")
 class InfoCommand : Command {
 
     @Autowired
@@ -27,7 +27,12 @@ class InfoCommand : Command {
         print.content(FileType.values().joinToString(", "))
 
         print.headline("Examples")
-        print.title("TODO")
-        // TODO
+        print.title("java -jar rename-files.jar")
+        print.content("-i")
+        print.content("-v")
+        print.content("rf")
+        print.content("rf")
+        print.content("rf -d \"folder\" -f yyyy-MM-dd -s holiday")
+        print.content("rf -u -r   (show renamed files, don't show unrenamed files!)")
     }
 }
