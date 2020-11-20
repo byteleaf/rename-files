@@ -9,13 +9,16 @@ available commands will be displayed.
 
 Run ```java -jar rename-files.jar -i``` to get some examples and details information about the application.
 
-## Global usage (windows)
+## Global usage
 
-Adjust the path in the **rename-files.bat** an add its parent folder to the PATH environment variable.
+Adjust the path in the **rename-files.sh** and add its parent folder to the PATH environment variable.
 
-Now you can use the app from everywhere via ``rename-files.bat -v``.
+Now you can use the app from everywhere: ``rename-files.sh -v``.
 
 # Releases
+
+## 1.0.4
++ MP4 support added
 
 ## 1.0.3
 + Timestamp will taken from ExifSubIfDDirectory.TAG_DATETIME
