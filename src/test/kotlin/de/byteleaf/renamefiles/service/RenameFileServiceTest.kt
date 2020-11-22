@@ -60,7 +60,7 @@ class RenameFileServiceTest {
      */
     @Test
     fun renameFolder() {
-        service.run { renameFolder(testFolder, true, displayRenamed = true, fileNameFormat = "yyyy-MM-dd HH-mm-ss", fileNameSuffix = " suffix", recursive = true) }
+        service.run { renameFolder(testFolder, false, fileNameFormat = "yyyy-MM-dd HH-mm-ss", fileNameSuffix = " suffix", recursive = true) }
         val folder = pathLocationService.getFolder(testFolder)
         validateFolder(folder, 6, listOf("2015-08-23 18-40-17 suffix.jpg", "2015-08-24 18-40-17 suffix.jpg", "2015-08-25 18-40-17 suffix.jpg",
                 "2020-08-30 17-40-56 suffix.jpg", "image.unsupported"))

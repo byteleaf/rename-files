@@ -14,14 +14,11 @@ class RenameFilesCommand : Command {
     @Parameter(names = arrayOf("--directory", "-d"), description = "Relative path to the top level directory (is working recursive)")
     private var directory: String = "./"
 
-    @Parameter(names = arrayOf("--unrenamed", "-u"), description = "Display all files, which could not be renamed, could happen if the file type is not supported")
-    private var displayUnRenamed: Boolean = true
-
     @Parameter(names = arrayOf("--recursive", "-r"), description = "Rename files from subfolders recursive")
     private var recursive: Boolean = false
 
-    @Parameter(names = arrayOf("--renamed", "-e"), description = "Display all renamed files")
-    private var displayRenamed: Boolean = false
+    @Parameter(names = arrayOf("--hide", "-h"), description = "Hide all renamed files in the report")
+    private var hideRenamed: Boolean = false
 
     @Parameter(names = arrayOf("--format", "-f"), description = "The format pattern for the new file name")
     private var fileNameFormat: String = "yyyy-MM-dd HH-mm-ss"
@@ -33,6 +30,6 @@ class RenameFilesCommand : Command {
     private lateinit var renameFileService: RenameFileService
 
     override fun run() {
-        renameFileService.renameFolder(directory, displayUnRenamed, displayRenamed, fileNameFormat, fileNameSuffix, recursive)
+        renameFileService.renameFolder(directory, hideRenamed, fileNameFormat, fileNameSuffix, recursive)
     }
 }

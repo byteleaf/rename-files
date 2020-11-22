@@ -33,6 +33,6 @@ class InfoCommand : Command {
         print.content("rf")
         print.content("rf")
         print.content("rf -d \"folder\" -f yyyy-MM-dd -s holiday -r")
-        print.content("rf -u -e   (show renamed files, don't show unrenamed files!)")
+        print.content("rf -h   (Hide all renamed files, only show unrenamed -> normally errors)")
     }
 }

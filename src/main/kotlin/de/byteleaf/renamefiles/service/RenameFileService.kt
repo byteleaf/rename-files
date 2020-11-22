@@ -22,11 +22,11 @@ class RenameFileService {
     /**
      * Is renaming all files in a folder. Same for all subfolder recursive.
      */
-    fun renameFolder(relativeFolder: String, displayUnRenamed: Boolean, displayRenamed: Boolean, fileNameFormat: String, fileNameSuffix: String, recursive: Boolean) {
+    fun renameFolder(relativeFolder: String, hideRenamed: Boolean, fileNameFormat: String, fileNameSuffix: String, recursive: Boolean) {
         val parentFolder = pathLocationService.getFolder(relativeFolder)
         val statusOverview = HashMap<RenameStatus, MutableList<File>>()
         renameFolderInternal(parentFolder, fileNameFormat, fileNameSuffix, statusOverview, recursive)
-        printService.printStatusReport(statusOverview, displayUnRenamed, displayRenamed)
+        printService.printStatusReport(statusOverview, hideRenamed)
     }
 
     private fun renameFolderInternal(parentFolder: File, fileNameFormat: String, fileNameSuffix: String,
