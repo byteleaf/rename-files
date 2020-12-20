@@ -40,7 +40,7 @@ class CreationDateService {
                 return getFileModifiedDate(metadata, fileNameFormat)
             }
         }
-        return null
+        return crDate
     }
 
     /**
