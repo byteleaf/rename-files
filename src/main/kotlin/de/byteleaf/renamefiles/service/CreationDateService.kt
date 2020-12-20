@@ -10,8 +10,6 @@ import de.byteleaf.renamefiles.constant.FileType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.nio.file.Path
-import java.text.SimpleDateFormat
-import java.time.ZoneId
 import java.util.*
 
 
@@ -33,10 +31,11 @@ class CreationDateService {
             FileType.MP4 -> getCreationDateMP4(metadata, fileNameFormat)
         } ?: getFileModifiedDate(metadata, fileNameFormat)
 
-        if(crDate != null) {
-            val date = dateService.parseDate(crDate, fileNameFormat)
+        if (crDate != null) {
+            val calendar = Calendar.getInstance()
+            calendar.time = dateService.parseDate(crDate, fileNameFormat)
             // must be a mistake, if photo was taken before
-            if(date.year < 1950) {
+            if (calendar.get(Calendar.YEAR) < 1950) {
                 return getFileModifiedDate(metadata, fileNameFormat)
             }
         }
