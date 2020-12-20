@@ -28,10 +28,19 @@ class CreationDateService {
      */
     fun getCreationDateAsString(path: Path, fileNameFormat: String, fileType: FileType): String? {
         val metadata = ImageMetadataReader.readMetadata(path.toFile())
-        return when (fileType) {
+        val crDate = when (fileType) {
             FileType.JPG -> getCreationDateJPG(metadata, fileNameFormat)
             FileType.MP4 -> getCreationDateMP4(metadata, fileNameFormat)
-        } ?: return getFileModifiedDate(metadata, fileNameFormat)
+        } ?: getFileModifiedDate(metadata, fileNameFormat)
+
+        if(crDate != null) {
+            val date = dateService.parseDate(crDate, fileNameFormat)
+            // must be a mistake, if photo was taken before
+            if(date.year < 1950) {
+                return getFileModifiedDate(metadata, fileNameFormat)
+            }
+        }
+        return null
     }
 
     /**
@@ -44,7 +53,6 @@ class CreationDateService {
     }
 
     private fun getCreationDateJPG(metadata: Metadata, fileNameFormat: String): String? {
-        // ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL
         val crDate = getExifData<Date>(metadata, listOf(MetaData(ExifSubIFDDirectory::class.java, ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL)))
         if (crDate != null) return dateService.formatDate(crDate, fileNameFormat)
         return null

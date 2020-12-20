@@ -20,6 +20,7 @@ Now you can use the app from everywhere: ``rename-files.sh -v``.
 ## 1.0.5
 + File extension in capital letters support
 + Use FileSystemDirectory.TAG_FILE_MODIFIED_DATE as fallback if no better creation date was found
++ detect invalid dates if cr date is older than 1950, in this case FileSystemDirectory.TAG_FILE_MODIFIED_DATE will be taken as fallback
 
 ## 1.0.4
 + MP4 support added

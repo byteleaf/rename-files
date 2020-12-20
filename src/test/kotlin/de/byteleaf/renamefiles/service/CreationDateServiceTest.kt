@@ -36,6 +36,10 @@ class CreationDateServiceTest {
         assertEquals("2020-08-31 12-54-19", getCreationDateAsString("mp4/time 12-54.mp4", FileType.MP4))
     }
 
+    @Test
+    fun getCreationDateAsStringDetectInvalidYear() {
+        assertEquals("2019-05-08 07-56-09", getCreationDateAsString("mp4/guardiola.mp4", FileType.MP4))
+    }
 
     private fun getCreationDateAsString(fileName: String, fileType: FileType): String? {
         return service.getCreationDateAsString(pathLocationService.getFile("test/creation-date/$fileName").toPath(),
