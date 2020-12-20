@@ -32,3 +32,7 @@ Now you can use the app from everywhere: ``rename-files.sh -v``.
 
 ## 1.0.2
 Initial version
+
+
+# TODO
++ For the FileSystemDirectory.TAG_FILE_MODIFIED_DATE the timezone should be checked if existing
