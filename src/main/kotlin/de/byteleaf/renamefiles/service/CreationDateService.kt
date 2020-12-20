@@ -4,6 +4,7 @@ import com.drew.imaging.ImageMetadataReader
 import com.drew.metadata.Directory
 import com.drew.metadata.Metadata
 import com.drew.metadata.exif.ExifSubIFDDirectory
+import com.drew.metadata.file.FileSystemDirectory
 import com.drew.metadata.mp4.Mp4Directory
 import de.byteleaf.renamefiles.constant.FileType
 import org.springframework.beans.factory.annotation.Autowired
@@ -30,10 +31,20 @@ class CreationDateService {
         return when (fileType) {
             FileType.JPG -> getCreationDateJPG(metadata, fileNameFormat)
             FileType.MP4 -> getCreationDateMP4(metadata, fileNameFormat)
-        }
+        } ?: return getFileModifiedDate(metadata, fileNameFormat)
+    }
+
+    /**
+     * If no timestamp was found, the last fallback is the FileSystemDirectory.TAG_FILE_MODIFIED_DATE
+     */
+    private fun getFileModifiedDate(metadata: Metadata, fileNameFormat: String): String? {
+        val crDate = getExifData<Date>(metadata, listOf(MetaData(FileSystemDirectory::class.java, FileSystemDirectory.TAG_FILE_MODIFIED_DATE)))
+        if (crDate != null) return dateService.formatDate(crDate, fileNameFormat)
+        return null;
     }
 
     private fun getCreationDateJPG(metadata: Metadata, fileNameFormat: String): String? {
+        // ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL
         val crDate = getExifData<Date>(metadata, listOf(MetaData(ExifSubIFDDirectory::class.java, ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL)))
         if (crDate != null) return dateService.formatDate(crDate, fileNameFormat)
         return null

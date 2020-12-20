@@ -42,7 +42,7 @@ class RenameFileServiceTest {
 
     @After
     fun tearDown() {
-        deleteTestFolder()
+        //deleteTestFolder()
     }
 
     /**
@@ -64,7 +64,7 @@ class RenameFileServiceTest {
         val folder = pathLocationService.getFolder(testFolder)
         validateFolder(folder, 6, listOf("2015-08-23 18-40-17 suffix.jpg", "2015-08-24 18-40-17 suffix.jpg", "2015-08-25 18-40-17 suffix.jpg",
                 "2020-08-30 17-40-56 suffix.jpg", "image.unsupported"))
-        validateFolder(folder.resolve("recursive"), 3, listOf("2015-08-23 18-40-17 suffix.jpg", "2015-08-23 18-40-17-1 suffix.jpg", "no-exif.jpg"))
+        validateFolder(folder.resolve("recursive"), 2, listOf("2015-08-23 18-40-17 suffix.jpg", "2015-08-23 18-40-17-1 suffix.jpg"))
     }
 
     private fun validateFolder(folder: File, expectedFileNumber: Int, expectedFileNames: List<String>) {
