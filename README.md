@@ -17,6 +17,9 @@ Now you can use the app from everywhere: ``rename-files.sh -v``.
 
 # Releases
 
+## 1.0.5
++ File extension in capital letters support
+
 ## 1.0.4
 + MP4 support added
 

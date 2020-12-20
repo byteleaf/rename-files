@@ -21,14 +21,9 @@ class FileTypeServiceTest {
     private lateinit var service: FileTypeService
 
     @Test
-    fun getFileEnding() {
-        assertEquals(".jpg", service.getFileEnding(Paths.get("./test.jpg")))
-        assertEquals(".unknown", service.getFileEnding(Paths.get("test.unknown")))
-    }
-
-    @Test
     fun getFileType() {
         assertEquals(FileType.JPG, service.getFileType(Paths.get("./test.jpg")))
+        assertEquals(FileType.JPG, service.getFileType(Paths.get("./test.JPG")))
         assertNull(service.getFileType(Paths.get("/")))
         assertNull(service.getFileType(Paths.get("test.unknown")))
     }

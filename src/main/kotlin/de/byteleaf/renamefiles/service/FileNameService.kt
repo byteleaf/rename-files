@@ -22,7 +22,7 @@ class FileNameService {
      */
     @Throws(IOException::class, ImageProcessingException::class)
     fun generateName(path: Path, fileNameFormat: String, fileNameSuffix: String): String {
-        val fileEnding = ".${path.toFile().extension}"
+        val fileEnding = fileTypeService.getFileType(path)!!.suffix
         val dateCreatedTs = creationDateService.getCreationDateAsString(path, fileNameFormat, fileTypeService.getFileType(path)!!)!!
         val appendix = getAppendix(path, dateCreatedTs, fileNameSuffix, fileEnding)
         return concatFileName(dateCreatedTs, appendix, fileNameSuffix, fileEnding)
@@ -42,7 +42,7 @@ class FileNameService {
         } else counterString
     }
 
-    private fun concatFileName(dateCreated: String, appendix: String, fileNameSuffix: String, fileEnding: String) = "$dateCreated$appendix$fileNameSuffix$fileEnding"
+    private fun concatFileName(dateCreated: String, appendix: String, fileNameSuffix: String, fileEnding: String) = "$dateCreated$appendix$fileNameSuffix.$fileEnding"
 
 
     /**

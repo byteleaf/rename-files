@@ -57,9 +57,9 @@ class FileNameServiceTest {
     @Test
     fun getAppendix() {
         assertEquals("-3", service.getAppendix(pathLocationService.getFile("test/appendix/2020_suffix.jpg").toPath(),
-                "2020", "_suffix", ".jpg"))     // File 2021_suffix.jpg is not existing
-        assertEquals("", service.getAppendix(pathLocationService.getFile("test/appendix/2021_suffix.jpg").toPath(), "2021", "_suffix", ".jpg"))
-        assertEquals("-1", service.getAppendix(pathLocationService.getFile("test/appendix/2019.jpg").toPath(), "2019", "", ".jpg"))
+                "2020", "_suffix", "jpg"))     // File 2021_suffix.jpg is not existing
+        assertEquals("", service.getAppendix(pathLocationService.getFile("test/appendix/2021_suffix.jpg").toPath(), "2021", "_suffix", "jpg"))
+        assertEquals("-1", service.getAppendix(pathLocationService.getFile("test/appendix/2019.jpg").toPath(), "2019", "", "jpg"))
     }
 
     @Test
@@ -67,7 +67,8 @@ class FileNameServiceTest {
         generateName("2019", pathLocationService.getFile("test/appendix/2019.jpg").toPath(), "", "2019-1.jpg")
         generateName("2020", pathLocationService.getFile("test/appendix/2020_suffix.jpg").toPath(), "_suffix", "2020-3_suffix.jpg")
         generateName("2021", pathLocationService.getFile("test/appendix/2021.jpg").toPath(), "_suffix", "2021_suffix.jpg")
-    }
+        generateName("2019", pathLocationService.getFile("test/appendix/2019.JPG").toPath(), "", "2019-1.jpg")
+   }
 
     private fun generateName(returnCreationDate: String?, input: Path, suffix: String, expectedResult: String) {
         Mockito.`when`(creationDateService.getCreationDateAsString(MockitoHelper.anyObject(), Mockito.anyString(), MockitoHelper.anyObject())).thenReturn(returnCreationDate)
