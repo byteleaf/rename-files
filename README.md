@@ -37,3 +37,4 @@ Initial version
 
 # TODO
 + For the FileSystemDirectory.TAG_FILE_MODIFIED_DATE the timezone should be checked if existing
++ Fix TODOs in tests -> some files are using the system creation date -> won't work

@@ -25,7 +25,9 @@ class CreationDateServiceTest {
         assertEquals("2020-11-15 21-08-41", getCreationDateAsString("jpg/crtime 21-08.jpg", FileType.JPG))
     }
 
+    // TODO is using the system creation date -> find a way to change it before the tests, won't work on other environments!
     @Test
+    @Ignore
     fun getCreationDateAsStringFallBack() {
         assertEquals("2020-11-01 22-26-51", getCreationDateAsString("jpg/no-exif.jpg", FileType.JPG))
     }
@@ -36,7 +38,9 @@ class CreationDateServiceTest {
         assertEquals("2020-08-31 12-54-19", getCreationDateAsString("mp4/time 12-54.mp4", FileType.MP4))
     }
 
+    // TODO is using the system creation date -> find a way to change it before the tests, won't work on other environments!
     @Test
+    @Ignore
     fun getCreationDateAsStringDetectInvalidYear() {
         assertEquals("2019-05-08 07-56-09", getCreationDateAsString("mp4/guardiola.mp4", FileType.MP4))
     }
