@@ -1,2 +1,2 @@
 #!/bin/bash
-java -jar "C:\Users\simon\Alles\04 workspace\rename-files\target\rename-files.jar" "$@"
+java -jar "C:\Users\simon\Alles\08 Workspace\rename-files\target\rename-files.jar" "$@"
