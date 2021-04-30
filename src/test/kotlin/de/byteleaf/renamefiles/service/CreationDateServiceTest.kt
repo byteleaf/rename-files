@@ -38,6 +38,11 @@ class CreationDateServiceTest {
         assertEquals("2020-08-31 12-54-19", getCreationDateAsString("mp4/time 12-54.mp4", FileType.MP4))
     }
 
+    @Test
+    fun getCreationDateAsStringHEIC() {
+        assertEquals("2020-09-01 12-46-02", getCreationDateAsString("heic/test-heic.HEIC", FileType.HEIC))
+    }
+
     // TODO is using the system creation date -> find a way to change it before the tests, won't work on other environments!
     @Test
     @Ignore

@@ -27,8 +27,9 @@ class CreationDateService {
     fun getCreationDateAsString(path: Path, fileNameFormat: String, fileType: FileType): String? {
         val metadata = ImageMetadataReader.readMetadata(path.toFile())
         val crDate = when (fileType) {
-            FileType.JPG -> getCreationDateJPG(metadata, fileNameFormat)
+            FileType.JPG -> getCreationDateImage(metadata, fileNameFormat)
             FileType.MP4 -> getCreationDateMP4(metadata, fileNameFormat)
+            FileType.HEIC -> getCreationDateImage(metadata, fileNameFormat)
         } ?: getFileModifiedDate(metadata, fileNameFormat)
 
         if (crDate != null) {
@@ -51,7 +52,7 @@ class CreationDateService {
         return null;
     }
 
-    private fun getCreationDateJPG(metadata: Metadata, fileNameFormat: String): String? {
+    private fun getCreationDateImage(metadata: Metadata, fileNameFormat: String): String? {
         val crDate = getExifData<Date>(metadata, listOf(MetaData(ExifSubIFDDirectory::class.java, ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL)))
         if (crDate != null) return dateService.formatDate(crDate, fileNameFormat)
         return null
@@ -60,9 +61,16 @@ class CreationDateService {
     private fun getCreationDateMP4(metadata: Metadata, fileNameFormat: String): String? {
         val crDate = getExifData<Date>(metadata, listOf(MetaData(Mp4Directory::class.java, Mp4Directory.TAG_CREATION_TIME)))
         if (crDate != null) {
+            return formatWithTimeZone(crDate, fileNameFormat, crDate.timezoneOffset * -1)
+        }
+        return null
+    }
+
+    private fun formatWithTimeZone(crDate: Date?, fileNameFormat: String, timeZoneOffsetMinutes: Int): String? {
+        if (crDate != null) {
             val cal = Calendar.getInstance()
             cal.time = crDate
-            cal.add(Calendar.MINUTE, crDate.timezoneOffset * -1)
+            cal.add(Calendar.MINUTE, timeZoneOffsetMinutes)
             return dateService.formatDate(cal.time, fileNameFormat)
         }
         return null

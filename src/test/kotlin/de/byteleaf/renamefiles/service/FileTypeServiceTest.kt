@@ -1,7 +1,6 @@
 package de.byteleaf.renamefiles.service
 
 import de.byteleaf.renamefiles.constant.FileType
-import de.byteleaf.renamefiles.service.FileTypeService
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
