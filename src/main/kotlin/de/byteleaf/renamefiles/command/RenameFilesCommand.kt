@@ -26,10 +26,13 @@ class RenameFilesCommand : Command {
     @Parameter(names = arrayOf("--suffix", "-s"), description = "A static file name suffix")
     private var fileNameSuffix: String = ""
 
+    @Parameter(names = arrayOf("--ajusthours", "-ah"), description = "To add additional hours to the timestamp to adjust time offset issues")
+    private var adjustHours: Int = 0;
+
     @Autowired
     private lateinit var renameFileService: RenameFileService
 
     override fun run() {
-        renameFileService.renameFolder(directory, hideRenamed, fileNameFormat, fileNameSuffix, recursive)
+        renameFileService.renameFolder(directory, hideRenamed, fileNameFormat, fileNameSuffix, recursive, adjustHours)
     }
 }

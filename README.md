@@ -17,6 +17,9 @@ Now you can use the app from everywhere: ``rename-files.sh -v``.
 
 # Releases
 
+## 1.0.6
++ -ha command added to core
+
 ## 1.0.5
 + File extension in capital letters support
 + Use FileSystemDirectory.TAG_FILE_MODIFIED_DATE as fallback if no better creation date was found

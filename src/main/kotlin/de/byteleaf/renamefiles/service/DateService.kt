@@ -13,7 +13,7 @@ class DateService {
     /**
      * Is converting a date to a string by a given format.
      * The UTC Time Zone will be used, because the dates will be parsed without timezone from Exif data and
-     * we wont to have the local time for the file name
+     * we want to have the local time for the file name
      */
     fun formatDate(date: Date, fileNameFormat: String): String = ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC"))
             .format(DateTimeFormatter.ofPattern(fileNameFormat))
