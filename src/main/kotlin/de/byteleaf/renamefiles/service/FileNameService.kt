@@ -44,6 +44,9 @@ class FileNameService {
         if(dateTimeAdjustment.hoursAdd != 0) {
             dateAdjusted = dateAdjusted.plusHours(dateTimeAdjustment.hoursAdd.toLong())
         }
+        if(dateTimeAdjustment.hoursSubtract != 0) {
+            dateAdjusted = dateAdjusted.minusHours(dateTimeAdjustment.hoursSubtract.toLong())
+        }
 
         val dateAdjustedString = dateAdjusted.format(formatter)
         return "$dateAdjustedString$fileNameSuffix.$fileEnding"

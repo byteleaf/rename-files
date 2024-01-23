@@ -55,7 +55,7 @@ class DateTimeAdjustmentServiceTest {
 
     @Test
     fun adjustFolder() {
-        service.run { adjustFolder(testFolder, recursive = true, adjustment = DateTimeAdjustment(2)) }
+        service.run { adjustFolder(testFolder, recursive = true, adjustment = DateTimeAdjustment(2, 0)) }
         val folder = pathLocationService.getFolder(testFolder)
         validateFolder(folder, 3, listOf("2015-08-23 20-40-17_suffix.jpg", "2015-08-23 20-40-17_already two hours added.jpg"))
         validateFolder(folder.resolve("recursive"), 3, listOf("starts_invalid 2015-08-23 18-40-00.jpg", "2015-08-23 20-40-17-03_with appendix.jpg", "2015-08-23 20-40-17_valid file in recursive folder.jpg"))

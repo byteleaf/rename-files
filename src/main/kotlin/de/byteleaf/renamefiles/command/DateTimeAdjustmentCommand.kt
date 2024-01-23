@@ -16,6 +16,10 @@ class DateTimeAdjustmentCommand : Command {
     @Parameter(names = arrayOf("--hoursadd", "-ha"), description = "To add hours to the timestamp")
     private var hoursAdd: Int = 0;
 
+    @Parameter(names = arrayOf("--hourssubtract", "-hs"), description = "To add hours to the timestamp")
+    private var hoursSubtract: Int = 0;
+
+
     @Parameter(names = arrayOf("--directory", "-d"), description = "Relative path to the top level directory (is working recursive)")
     private var directory: String = "./"
 
@@ -26,6 +30,6 @@ class DateTimeAdjustmentCommand : Command {
     private lateinit var dateTimeAdjustmentService: DateTimeAdjustmentService
 
     override fun run() {
-        dateTimeAdjustmentService.adjustFolder(directory, recursive, DateTimeAdjustment(hoursAdd))
+        dateTimeAdjustmentService.adjustFolder(directory, recursive, DateTimeAdjustment(hoursAdd, hoursSubtract))
     }
 }
