@@ -7,7 +7,6 @@ import com.drew.metadata.exif.ExifSubIFDDirectory
 import com.drew.metadata.file.FileSystemDirectory
 import com.drew.metadata.mp4.Mp4Directory
 import de.byteleaf.renamefiles.constant.FileType
-import de.byteleaf.renamefiles.model.TimeAdjustments
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.nio.file.Path
@@ -25,13 +24,13 @@ class CreationDateService {
     /**
      * Tries to receive (or parse) the creation date of the file MetaData ExifIF TAG_DATETIME
      */
-    fun getCreationDateAsString(path: Path, fileNameFormat: String, fileType: FileType, timeAdjustments: TimeAdjustments): String? {
+    fun getCreationDateAsString(path: Path, fileNameFormat: String, fileType: FileType): String? {
         val metadata = ImageMetadataReader.readMetadata(path.toFile())
         val crDate = when (fileType) {
-            FileType.JPG -> getCreationDateImage(metadata, fileNameFormat, timeAdjustments)
-            FileType.MP4 -> getCreationDateMP4(metadata, fileNameFormat, timeAdjustments)
-            FileType.HEIC -> getCreationDateImage(metadata, fileNameFormat, timeAdjustments)
-        } ?: getFileModifiedDate(metadata, fileNameFormat, timeAdjustments)
+            FileType.JPG -> getCreationDateImage(metadata, fileNameFormat)
+            FileType.MP4 -> getCreationDateMP4(metadata, fileNameFormat)
+            FileType.HEIC -> getCreationDateImage(metadata, fileNameFormat)
+        } ?: getFileModifiedDate(metadata, fileNameFormat)
 
         var finalCrDate = crDate
         if (crDate != null) {
@@ -40,7 +39,7 @@ class CreationDateService {
             // TODO add timeAdjustments
             // must be a mistake, if photo was taken before
             if (calendar.get(Calendar.YEAR) < 1950) {
-                finalCrDate = getFileModifiedDate(metadata, fileNameFormat, timeAdjustments)
+                finalCrDate = getFileModifiedDate(metadata, fileNameFormat)
             }
         }
 
@@ -50,7 +49,7 @@ class CreationDateService {
     /**
      * If no timestamp was found, the last fallback is the FileSystemDirectory.TAG_FILE_MODIFIED_DATE
      */
-    private fun getFileModifiedDate(metadata: Metadata, fileNameFormat: String, timeAdjustments: TimeAdjustments): String? {
+    private fun getFileModifiedDate(metadata: Metadata, fileNameFormat: String): String? {
         val crDate = getExifData<Date>(metadata, listOf(MetaData(FileSystemDirectory::class.java, FileSystemDirectory.TAG_FILE_MODIFIED_DATE)))
 
         if (crDate != null) return dateService.formatDate(crDate, fileNameFormat)

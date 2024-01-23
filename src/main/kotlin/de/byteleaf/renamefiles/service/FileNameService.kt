@@ -2,7 +2,6 @@ package de.byteleaf.renamefiles.service
 
 import com.drew.imaging.ImageProcessingException
 import de.byteleaf.renamefiles.constant.RenameStatus
-import de.byteleaf.renamefiles.model.TimeAdjustments
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.io.IOException
@@ -22,9 +21,9 @@ class FileNameService {
      * @sample 2020-02-11-3_suffix.jpg
      */
     @Throws(IOException::class, ImageProcessingException::class)
-    fun generateName(path: Path, fileNameFormat: String, fileNameSuffix: String, timeAdjustments: TimeAdjustments): String {
+    fun generateName(path: Path, fileNameFormat: String, fileNameSuffix: String): String {
         val fileEnding = fileTypeService.getFileType(path)!!.suffix
-        val dateCreatedTs = creationDateService.getCreationDateAsString(path, fileNameFormat, fileTypeService.getFileType(path)!!, timeAdjustments)!!
+        val dateCreatedTs = creationDateService.getCreationDateAsString(path, fileNameFormat, fileTypeService.getFileType(path)!!)!!
         val appendix = getAppendix(path, dateCreatedTs, fileNameSuffix, fileEnding)
         return concatFileName(dateCreatedTs, appendix, fileNameSuffix, fileEnding)
     }
@@ -50,19 +49,19 @@ class FileNameService {
      * To get the status if a renamed is possible and necessary
      * @return the [RenameStatus] if [RenameStatus.RENAMED] means a renamed would be possible!
      */
-    fun shouldRename(path: Path, fileNameFormat: String, fileNameSuffix: String, timeAdjustments: TimeAdjustments): RenameStatus {
+    fun shouldRename(path: Path, fileNameFormat: String, fileNameSuffix: String): RenameStatus {
         if (!fileTypeService.isFileTypeSupported(path)) return RenameStatus.FILE_TYPE_NOT_SUPPORTED
-        if (creationDateService.getCreationDateAsString(path, fileNameFormat, fileTypeService.getFileType(path)!!, timeAdjustments) == null) return RenameStatus.CREATION_DATE_NOT_FOUND_IN_EXIF
-        if (!isRenameNecessary(path, fileNameFormat, fileNameSuffix, timeAdjustments)) return RenameStatus.RENAME_NOT_NECESSARY
+        if (creationDateService.getCreationDateAsString(path, fileNameFormat, fileTypeService.getFileType(path)!!) == null) return RenameStatus.CREATION_DATE_NOT_FOUND_IN_EXIF
+        if (!isRenameNecessary(path, fileNameFormat, fileNameSuffix)) return RenameStatus.RENAME_NOT_NECESSARY
         return RenameStatus.RENAMED
     }
 
     /**
      * To check weather a file is still in the correct name format
      */
-    fun isRenameNecessary(path: Path, fileNameFormat: String, fileNameSuffix: String, timeAdjustments: TimeAdjustments): Boolean {
+    fun isRenameNecessary(path: Path, fileNameFormat: String, fileNameSuffix: String): Boolean {
         val fileName = path.fileName.toFile().nameWithoutExtension
-        val creationDate = creationDateService.getCreationDateAsString(path, fileNameFormat, fileTypeService.getFileType(path)!!, timeAdjustments) ?: ""
+        val creationDate = creationDateService.getCreationDateAsString(path, fileNameFormat, fileTypeService.getFileType(path)!!) ?: ""
         if (fileName.length < (fileNameSuffix + creationDate).length) return true
         if (!fileName.startsWith(creationDate) || !fileName.endsWith(fileNameSuffix)) return true
         val appendix = fileName.substring(creationDate.length, fileName.length - fileNameSuffix.length)
