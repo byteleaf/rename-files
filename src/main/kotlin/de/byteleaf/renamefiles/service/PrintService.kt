@@ -57,6 +57,17 @@ class PrintService {
         }
     }
 
+    fun printDateTimeAdjustmentReport(statusOverview: HashMap<Boolean, MutableList<File>>) {
+        headline("Report")
+        statusOverview.keys.forEach { key ->
+            if(key) {
+                printReport("DateTime Adjusted", statusOverview[key])
+            } else {
+                printReport("DateTime not adjusted", statusOverview[key], true)
+            }
+        }
+    }
+
     private fun printReport(title: String, files: MutableList<File>?, isError: Boolean = false) {
         if(files != null) {
             title("$title (${files.size})")

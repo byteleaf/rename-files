@@ -16,8 +16,8 @@ class DateTimeAdjustmentCommand : Command {
     @Parameter(names = arrayOf("--hoursadd", "-ha"), description = "To add hours to the timestamp")
     private var hoursAdd: Int = 0;
 
-    @Parameter(names = arrayOf("--format", "-f"), description = "The format pattern for the new file name")
-    private var fileNameFormat: String = "yyyy-MM-dd HH-mm-ss"
+    @Parameter(names = arrayOf("--directory", "-d"), description = "Relative path to the top level directory (is working recursive)")
+    private var directory: String = "./"
 
     @Parameter(names = arrayOf("--recursive", "-r"), description = "Rename files from subfolders recursive")
     private var recursive: Boolean = false
@@ -26,6 +26,6 @@ class DateTimeAdjustmentCommand : Command {
     private lateinit var dateTimeAdjustmentService: DateTimeAdjustmentService
 
     override fun run() {
-        dateTimeAdjustmentService.adjust(DateTimeAdjustment(hoursAdd))
+        dateTimeAdjustmentService.adjustFolder(directory, recursive, DateTimeAdjustment(hoursAdd))
     }
 }

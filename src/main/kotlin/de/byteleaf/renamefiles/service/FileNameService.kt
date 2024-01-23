@@ -2,19 +2,25 @@ package de.byteleaf.renamefiles.service
 
 import com.drew.imaging.ImageProcessingException
 import de.byteleaf.renamefiles.constant.RenameStatus
+import de.byteleaf.renamefiles.model.DateTimeAdjustment
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.io.IOException
 import java.nio.file.Path
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 @Service
 class FileNameService {
 
     @Autowired
     private lateinit var creationDateService: CreationDateService
-
     @Autowired
     private lateinit var fileTypeService: FileTypeService
+    @Autowired
+    private lateinit var dateService: DateService
 
     /**
      * Generates a valid, not used file name
@@ -26,6 +32,21 @@ class FileNameService {
         val dateCreatedTs = creationDateService.getCreationDateAsString(path, fileNameFormat, fileTypeService.getFileType(path)!!)!!
         val appendix = getAppendix(path, dateCreatedTs, fileNameSuffix, fileEnding)
         return concatFileName(dateCreatedTs, appendix, fileNameSuffix, fileEnding)
+    }
+
+    @Throws(IOException::class, ImageProcessingException::class)
+    fun generateNameWithDateTimeAdjustment(path: Path, fileNameFormat: String, fileNameSuffix: String, dateTimeAdjustment: DateTimeAdjustment): String {
+        val fileEnding = fileTypeService.getFileType(path)!!.suffix
+        val dateCreatedTs = creationDateService.getCreationDateAsString(path, fileNameFormat, fileTypeService.getFileType(path)!!)!!
+
+        val formatter = DateTimeFormatter.ofPattern(fileNameFormat)
+        var dateAdjusted = LocalDateTime.parse(dateCreatedTs, formatter)
+        if(dateTimeAdjustment.hoursAdd != 0) {
+            dateAdjusted = dateAdjusted.plusHours(dateTimeAdjustment.hoursAdd.toLong())
+        }
+
+        val dateAdjustedString = dateAdjusted.format(formatter)
+        return "$dateAdjustedString$fileNameSuffix.$fileEnding"
     }
 
     /**

@@ -36,7 +36,6 @@ class CreationDateService {
         if (crDate != null) {
             val calendar = Calendar.getInstance()
             calendar.time = dateService.parseDate(crDate, fileNameFormat)
-            // TODO add timeAdjustments
             // must be a mistake, if photo was taken before
             if (calendar.get(Calendar.YEAR) < 1950) {
                 finalCrDate = getFileModifiedDate(metadata, fileNameFormat)

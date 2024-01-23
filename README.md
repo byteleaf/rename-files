@@ -18,7 +18,7 @@ Now you can use the app from everywhere: ``rename-files.sh -v``.
 # Releases
 
 ## 1.0.6
-+ -ha command added to core
++ New command ta/timeadjustment implemented. If a timezonw was wrong with this command you can easily adjust the time stamp of already renamed images.
 
 ## 1.0.5
 + File extension in capital letters support
